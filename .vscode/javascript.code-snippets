@@ -1,0 +1,116 @@
+{
+   "Image Import": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "imgimp",
+      "body": [
+         "import $2 from '../assets$1?${3:w=960;1920;2560&}format=webp&img';",
+      ],
+   },
+   "Console Log without env": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "cll",
+      "body": "console.log($1);",
+   },
+   "Console Log": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "cl",
+      "body": "if (DEBUG) console.log($1);",
+   },
+   "DEBUG CONST": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "dbug",
+      "body": "const DEBUG = true && import.meta.env.MODE === \"development\";",
+   },
+   "Named function": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "nfn",
+      "body": ["function $1($2) {", "\t$0", "}"],
+   },
+   "Function": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "fn",
+      "body": ["function ($1) {", "\t$0", "}"],
+   },
+   "Anonymous Function": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "afn",
+      "body": ["(function $1($2) {", "\t$0", "})();"],
+   },
+   "Constant Inline Function": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "cifn",
+      "body": ["const $1 = ($2) => {", "\t$0", "}"],
+   },
+   "Inline Function": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "ifn",
+      "body": ["($1) => {", "\t$0", "}"],
+   },
+   "Inline Function(one line)": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "ifno",
+      "body": ["($1) => $0"],
+   },
+   "IF/ELSE Condition": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "ifc",
+      "body": ["if ($1) {", "\t$0", "}${2: else {", "\t$3", "\\}}"],
+   },
+   "IF One line": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "ifco",
+      "body": ["if ($1) $0"],
+   },
+   "Compact IF": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "cifc",
+      "body": ["if (!$1) return;", "", "$0"],
+   },
+   "Array Method": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "arrmh",
+      "body": [
+         "${1|forEach,map,filter,reduce,some|}((${2:item}) => {",
+         "\t$0",
+         "})",
+      ],
+   },
+   "Delagation": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "dlg",
+      "body": ["if (${1:event}.target.closest(\"$2\")) {", "\t$0", "}"],
+   },
+   "Compact Delegation": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "delegation",
+      "body": ["if (!${1:event}.target.closest(\"$2\")) return;", "", "$0"],
+   },
+   "? Condition": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "?if",
+      "body": ["$1 ? $2 : $3"],
+   },
+   "NODE ENV": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "nodeenv",
+      "body": ["import.meta.env.MODE"],
+   },
+   "NODE ENV IF/ELSE Condition": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "envif",
+      "body": [
+         "if (import.meta.env.MODE === \"${1|development,production|}\") {",
+         "\t$0",
+         "}${2: else {",
+         "\t$3",
+         "\\}}",
+      ],
+   },
+   "NODE ENV IF/ELSE Condition One Line": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact",
+      "prefix": "envifco",
+      "body": [
+         "if (import.meta.env.MODE === \"${1|development,production|}\") $0",
+      ],
+   },
+}

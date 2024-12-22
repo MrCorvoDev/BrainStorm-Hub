@@ -1,0 +1,32 @@
+name: Deploy to Hosting via FTP
+on:
+   push:
+      branches:
+         - main
+
+jobs:
+   deploy:
+      runs-on: ubuntu-latest
+
+      steps:
+         - name: Checkout Code
+           uses: actions/checkout@v3
+
+         - name: Install Dependencies
+           run: npm ci
+
+         - name: Build Project
+           run: npm run build
+
+         - name: Get Repository Name
+           run: echo "REPO_NAME=$(echo ${{ github.event.repository.name }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+         - name: Deploy to FTP Server
+           uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+           with:
+              server: ${{ secrets.FTP_SERVER }}
+              username: ${{ secrets.FTP_USERNAME }}
+              password: ${{ secrets.FTP_PASSWORD }}
+              local-dir: ./dist/
+              server-dir: ${{ secrets.DEPLOY_PATH }}/${{ env.REPO_NAME }}/
+              git-ftp-args: '--insecure'

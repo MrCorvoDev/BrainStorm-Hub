@@ -1,0 +1,57 @@
+{
+   "SVG Sprite use": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact,html",
+      "prefix": "svgu",
+      "body": ["<svg>", "\t<use href=\"/__#$1\" />", "</svg>"],
+   },
+   "Загрузка без блокирования DOM": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact,html",
+      "prefix": "linkpreload",
+      "body": "<link rel=\"preload\" href=\"$1\" as=\"style\" onload=\"this.onload=null;this.rel=\"stylesheet\"\">",
+   },
+   "Youtube Iframe": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact,html",
+      "prefix": "yt",
+      "body": "<iframe src=\"${2:https://www.youtube.com/embed/$1}\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>",
+   },
+   "Placeholder Image": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact,html",
+      "prefix": "imgpl",
+      "body": "https://via.placeholder.com/${1:500}.jpg",
+   },
+   "Placeholder Image 2": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact,html",
+      "prefix": "imgpl2",
+      "body": "https://picsum.photos/${1:500}.jpg",
+   },
+   "Пробел": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact,html",
+      "prefix": "space",
+      "body": "&nbsp;",
+   },
+   //=======================================================================================================================================================================================================================================================
+   "Input": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact,html",
+      "prefix": "input",
+      "body": ["<input type=\"${1:text}\" autocomplete=\"$2\">"],
+   },
+   "Radio": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact,html",
+      "prefix": "radio",
+      "body": [
+         "<!-- Убери checked у остальных -->",
+         "<fieldset className=\"radio form-$1__radio\">",
+         "\t<legend className=\"radio__title\">$2</legend>",
+         "\t.radio__option*$3>input#radio__option-\\$[type=\"radio\" checked value=\"\\$\"]+label[for=\"radio__option-\\$\"]$0",
+         "</fieldset>",
+      ],
+   },
+   "Check": {
+      "scope": "javascript,typescript,javascriptreact,typescriptreact,html",
+      "prefix": "check",
+      "body": [
+         "<div><input type=\"checkbox\" id=\"form-$1-$3\" ${4:checked }/><label for=\"form-$1-$3\">$2</label></div>",
+      ],
+   },
+   //=======================================================================================================================================================================================================================================================
+}
