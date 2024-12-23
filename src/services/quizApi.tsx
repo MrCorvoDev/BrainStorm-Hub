@@ -11,7 +11,6 @@ export interface QuizQuestionType {
    answer: string;
 }
 export interface QuizType {
-   author: string;
    title: string;
    description: string;
    questions: QuizQuestionType[];
