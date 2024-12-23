@@ -35,12 +35,20 @@ export const layout = {
    },
 };
 
+const palette = {
+   color1: '#000000',
+   color2: '#2E236C',
+   color3: '#433D8B',
+   color4: '#dccae5',
+};
+
 //! Avoid imports of this const, theme might change dynamically. Try recommended styled-components method or useTheme hook
 const theme: DefaultTheme = {
    ...layout,
    fontFamily: 'Unbounded, serif',
-   color: '#fff',
-   backgroundColor: '#000',
+   color: palette.color4,
+   backgroundColor: palette.color1,
+   ...palette,
 };
 
 export default theme;
