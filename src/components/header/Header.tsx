@@ -24,7 +24,10 @@ interface HeaderProps {
    Color?: Color;
 }
 const HeaderEl = styled.header<HeaderProps>`
-   --background: ${Color('#000').alpha(0.6).hexa()};
+   --background: ${({theme}) =>
+      Color(theme.color2 as string)
+         .alpha(0.6)
+         .hexa()};
    --blur: 5px;
    position: fixed;
    width: 100%;

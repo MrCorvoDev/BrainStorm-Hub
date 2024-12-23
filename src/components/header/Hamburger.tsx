@@ -41,7 +41,7 @@ interface HamburgerProps {
 const HamburgerEl = styled.button<HamburgerProps>`
    --burgerWidth: ${rem(30)};
    --burgerHeight: ${rem(20)};
-   --burgerColor: #fff;
+   --burgerColor: ${({theme}) => theme.color4 as string};
    --burgerSpace: calc((var(--headerH) - var(--burgerWidth)) / 2);
    height: 100%;
    padding: 0 var(--burgerSpace);
