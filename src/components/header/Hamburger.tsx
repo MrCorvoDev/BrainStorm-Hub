@@ -18,7 +18,8 @@ const Line = styled.span`
    position: absolute;
    left: 0;
    width: 100%;
-   height: ${rem(2)};
+   height: ${rem(3)};
+   border-radius: 1.5px;
    background: var(--burgerColor);
 `;
 
