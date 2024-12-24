@@ -16,12 +16,12 @@ const InputEl = styled.input<{$error: FieldError | undefined}>`
    width: 100%;
 `;
 
-interface InputProps {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
    name: string;
    placeholder?: string | undefined;
    required?: boolean;
 }
-const Input = ({name, placeholder, required = true}: InputProps) => {
+const Input = ({name, placeholder, required = true, ...rest}: InputProps) => {
    const {
       register,
       formState: {errors},
@@ -32,6 +32,7 @@ const Input = ({name, placeholder, required = true}: InputProps) => {
          {...register(name, {required})}
          $error={errors[name] as FieldError | undefined}
          placeholder={placeholder}
+         {...rest}
       />
    );
 };
