@@ -1,4 +1,9 @@
-import {FieldError, FieldValues, SubmitHandler, useForm} from 'react-hook-form';
+import {
+   FieldValues,
+   FormProvider,
+   SubmitHandler,
+   useForm,
+} from 'react-hook-form';
 import styled from 'styled-components';
 
 import Button from '../components/form/Button';
@@ -49,27 +54,23 @@ const CreateQuiz = () => {
       <Section>
          <div className='container'>
             <Headline>Create a Quiz</Headline>
-            <Form onSubmit={event => void handleSubmit(onSubmit)(event)}>
-               <Grid>
-                  <Label title='Quiz Name'>
-                     <Input
-                        name='quizName'
-                        register={register}
-                        error={errors.quizName as FieldError | undefined}
-                     />
-                  </Label>
-                  <Label title='Quiz Description'>
-                     <Input
-                        name='quizDescription'
-                        register={register}
-                        error={errors.quizName as FieldError | undefined}
-                     />
-                  </Label>
-               </Grid>
-               <Grid>
-                  <Button type='submit'>Submit</Button>
-               </Grid>
-            </Form>
+            <FormProvider {...methods}>
+               <Form
+                  onSubmit={event => void methods.handleSubmit(onSubmit)(event)}
+               >
+                  <Grid>
+                     <Label title='Quiz Name'>
+                        <Input name='quizName' />
+                     </Label>
+                     <Label title='Quiz Description'>
+                        <Input name='quizDescription' />
+                     </Label>
+                  </Grid>
+                  <Grid>
+                     <Button type='submit'>Submit</Button>
+                  </Grid>
+               </Form>
+            </FormProvider>
          </div>
       </Section>
    );

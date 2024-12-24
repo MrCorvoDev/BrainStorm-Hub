@@ -1,4 +1,4 @@
-import {FieldError, FieldValues, UseFormRegister} from 'react-hook-form';
+import {FieldError, useFormContext} from 'react-hook-form';
 import styled from 'styled-components';
 
 import em from '../../styles/utils/em';
@@ -18,22 +18,21 @@ const InputEl = styled.input<{$error: FieldError | undefined}>`
 
 interface InputProps {
    name: string;
-   register: UseFormRegister<FieldValues>;
-   error: FieldError | undefined;
    placeholder?: string | undefined;
    required?: boolean;
 }
-const Input = ({
-   name,
-   register,
-   error,
-   placeholder,
-   required = true,
-}: InputProps) => (
-   <InputEl
-      {...register(name, {required})}
-      $error={error}
-      placeholder={placeholder}
-   />
-);
+const Input = ({name, placeholder, required = true}: InputProps) => {
+   const {
+      register,
+      formState: {errors},
+   } = useFormContext();
+
+   return (
+      <InputEl
+         {...register(name, {required})}
+         $error={errors[name] as FieldError | undefined}
+         placeholder={placeholder}
+      />
+   );
+};
 export default Input;
