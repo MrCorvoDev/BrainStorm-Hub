@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import Button from '../components/form/Button';
 import Input from '../components/form/Input';
 import Label from '../components/form/Label';
+import QuestionsBox from '../components/form/question/QuestionsBox';
 import Section from '../components/Section';
 import {layout} from '../styles/theme';
 import em from '../styles/utils/em';
@@ -39,11 +40,7 @@ const Grid = styled.div`
 `;
 
 const CreateQuiz = () => {
-   const {
-      register,
-      handleSubmit,
-      formState: {errors},
-   } = useForm();
+   const methods = useForm();
 
    const onSubmit: SubmitHandler<FieldValues> = async data => {
       console.log(data);
@@ -66,6 +63,7 @@ const CreateQuiz = () => {
                         <Input name='quizDescription' />
                      </Label>
                   </Grid>
+                  <QuestionsBox />
                   <Grid>
                      <Button type='submit'>Submit</Button>
                   </Grid>
