@@ -5,7 +5,6 @@ const api = axios.create({
 });
 
 export interface QuizQuestionType {
-   type: 'boolean' | 'multiple';
    question: string;
    options: string[];
    answer: string;
