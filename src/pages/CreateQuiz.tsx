@@ -88,7 +88,9 @@ const CreateQuizEl = () => {
                   </Grid>
                   <QuestionsBox />
                   <Grid>
-                     <Button type='submit'>Submit</Button>
+                     <Button type='submit'>
+                        <span>Submit</span>
+                     </Button>
                   </Grid>
                </Form>
             </FormProvider>
