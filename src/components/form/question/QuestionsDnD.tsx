@@ -15,12 +15,11 @@ import {
 } from '@dnd-kit/sortable';
 
 import Questions from './Questions';
+import {useQuestions} from './QuestionsBox';
 
-interface QuestionsDnDProps {
-   items: number[];
-   setItems: React.Dispatch<React.SetStateAction<number[]>>;
-}
-const QuestionsDnD = ({items, setItems}: QuestionsDnDProps) => {
+const QuestionsDnD = () => {
+   const {orderArray, setOrderArray} = useQuestions();
+
    const sensors = useSensors(
       useSensor(PointerSensor),
       useSensor(KeyboardSensor, {
@@ -32,11 +31,11 @@ const QuestionsDnD = ({items, setItems}: QuestionsDnDProps) => {
       const {active, over} = event;
 
       if (active.id !== over?.id) {
-         setItems(items => {
-            const oldIndex = items.indexOf(Number(active.id));
-            const newIndex = items.indexOf(Number(over?.id));
+         setOrderArray(orderArray => {
+            const oldIndex = orderArray.indexOf(active.id as string);
+            const newIndex = orderArray.indexOf(over?.id as string);
 
-            return arrayMove(items, oldIndex, newIndex);
+            return arrayMove(orderArray, oldIndex, newIndex);
          });
       }
    };
@@ -47,8 +46,11 @@ const QuestionsDnD = ({items, setItems}: QuestionsDnDProps) => {
          collisionDetection={closestCenter}
          onDragEnd={handleDragEnd}
       >
-         <SortableContext items={items} strategy={verticalListSortingStrategy}>
-            <Questions items={items} setItems={setItems} />
+         <SortableContext
+            items={orderArray}
+            strategy={verticalListSortingStrategy}
+         >
+            <Questions />
          </SortableContext>
       </DndContext>
    );

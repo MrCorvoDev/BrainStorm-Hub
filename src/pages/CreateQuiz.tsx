@@ -25,7 +25,6 @@ const Headline = styled.h1`
 const Form = styled.form`
    display: flex;
    flex-direction: column;
-   align-items: flex-start;
    gap: ${em(16)};
 `;
 

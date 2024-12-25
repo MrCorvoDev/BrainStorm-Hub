@@ -1,6 +1,7 @@
 import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {useState} from 'react';
+import {nanoid} from 'nanoid';
+import {createContext, useContext, useState} from 'react';
 import styled from 'styled-components';
 
 import IconButtonStyles from '../../../styles/IconButtonStyles';
@@ -54,21 +55,88 @@ const AddQuestionButton = styled.button`
       ${IconButtonStyles}
    }
 `;
+
+export interface OptionType {
+   value: string;
+   label: string;
+}
+export interface QuestionType {
+   id: string;
+   question: string;
+   options: OptionType[];
+   answer: OptionType;
+}
+
+interface questionsInitContext {
+   questions: QuestionType[];
+   setQuestions: React.Dispatch<React.SetStateAction<QuestionType[]>>;
+   orderArray: string[];
+   setOrderArray: React.Dispatch<React.SetStateAction<string[]>>;
+   validateOpenedQuestionFn: () => Promise<boolean> | (() => boolean);
+   setValidateOpenedQuestionFn: React.Dispatch<
+      React.SetStateAction<() => Promise<boolean> | (() => boolean)>
+   >;
+}
+const initContext: questionsInitContext = {
+   questions: [],
+   setQuestions: () => void 0,
+   orderArray: [],
+   setOrderArray: () => void 0,
+   validateOpenedQuestionFn: () => () => true,
+   setValidateOpenedQuestionFn: () => void 0,
+};
+
+const QuestionsContext = createContext<questionsInitContext>(initContext);
+export const useQuestions = () => useContext(QuestionsContext);
+
 const QuestionsBox = () => {
-   const [items, setItems] = useState<number[]>([]);
+   const [questions, setQuestions] = useState<QuestionType[]>([]);
+   const [orderArray, setOrderArray] = useState<string[]>([]);
+   const [validateOpenedQuestionFn, setValidateOpenedQuestionFn] = useState<
+      () => Promise<boolean> | (() => boolean)
+   >(() => () => true);
 
    const handleAddQuestion = () => {
-      setItems(items => [...items, items.length + 1]);
+      (async () => {
+         const isSafeToContinue = await validateOpenedQuestionFn();
+         if (!isSafeToContinue) return;
+
+         const newId = nanoid();
+         setOrderArray(items => [...items, newId]);
+         setQuestions(items => [
+            ...items,
+            {
+               id: newId,
+               question: 'New Question',
+               options: [
+                  {value: 'true', label: 'True'},
+                  {value: 'false', label: 'False'},
+               ],
+               answer: {value: 'true', label: 'True'},
+            },
+         ]);
+      })().catch(console.error);
    };
 
    return (
-      <QuestionsBoxEl>
-         <QuestionsDnD items={items} setItems={setItems} />
-         <AddQuestionButton type='button' onClick={handleAddQuestion}>
-            <span>Create new question</span>
-            <FontAwesomeIcon icon={faPlus} />
-         </AddQuestionButton>
-      </QuestionsBoxEl>
+      <QuestionsContext.Provider
+         value={{
+            questions,
+            setQuestions,
+            orderArray,
+            setOrderArray,
+            validateOpenedQuestionFn,
+            setValidateOpenedQuestionFn,
+         }}
+      >
+         <QuestionsBoxEl>
+            <QuestionsDnD />
+            <AddQuestionButton type='button' onClick={handleAddQuestion}>
+               <span>Create new question</span>
+               <FontAwesomeIcon icon={faPlus} />
+            </AddQuestionButton>
+         </QuestionsBoxEl>
+      </QuestionsContext.Provider>
    );
 };
 export default QuestionsBox;

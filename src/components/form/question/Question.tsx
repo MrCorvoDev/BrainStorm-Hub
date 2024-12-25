@@ -5,18 +5,18 @@ import {
    faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {useState} from 'react';
 import styled from 'styled-components';
 
 import IconButtonStyles from '../../../styles/IconButtonStyles';
 import em from '../../../styles/utils/em';
-import AccordionButton from '../../accordion/AccordionButton';
+import {useAccordion} from '../../accordion/Accordion';
 import AccordionContent from '../../accordion/AccordionContent';
 import CreateQuestion from './CreateQuestion';
+import {useQuestions} from './QuestionsBox';
 
 const QuestionEl = styled.div`
    padding: ${em(24)} ${em(8)};
-   border: 1px solid ${props => props.theme.color4 as string};
+   border: 2px solid ${props => props.theme.color4 as string};
    border-radius: 5px;
 `;
 
@@ -53,29 +53,37 @@ const IconContainer = styled.div`
    align-items: center;
 `;
 
-const EditButton = styled(AccordionButton)`
-   ${IconButtonStyles}
-`;
-
-const DeleteButton = styled.button`
+const IconButton = styled.button`
    ${IconButtonStyles}
 `;
 
 const Content = styled.div`
    padding: 0 ${em(8)};
-   padding-top: ${em(16)};
+   padding-top: ${em(32)};
 `;
 
 interface QuestionProps {
-   setItems: React.Dispatch<React.SetStateAction<number[]>>;
-   id: number;
+   id: string;
    handleElListeners: SyntheticListenerMap | undefined;
 }
-const Question = ({setItems, id, handleElListeners}: QuestionProps) => {
-   const [questionName, setQuestionName] = useState<string>('New Question');
-   const handleDelete = () => {
-      setItems(items => items.filter(itemId => itemId !== id));
+const Question = ({id, handleElListeners}: QuestionProps) => {
+   const {questions, setOrderArray, validateOpenedQuestionFn} = useQuestions();
+   const {toggle} = useAccordion();
+
+   const handleEdit = () => {
+      (async () => {
+         const isSafeToContinue = await validateOpenedQuestionFn();
+         if (!isSafeToContinue) return;
+
+         toggle();
+      })().catch(console.error);
    };
+
+   const handleDelete = () => {
+      setOrderArray(orderArray => orderArray.filter(itemId => itemId !== id));
+   };
+
+   const item = questions.find(question => question.id === id);
 
    return (
       <QuestionEl>
@@ -84,23 +92,20 @@ const Question = ({setItems, id, handleElListeners}: QuestionProps) => {
                <Handle type='button' {...handleElListeners}>
                   <FontAwesomeIcon icon={faGripVertical} />
                </Handle>
-               <span>{questionName}</span>
+               <span>{item?.question}</span>
             </Flex>
             <IconContainer>
-               <EditButton>
+               <IconButton onClick={handleEdit} type='button'>
                   <FontAwesomeIcon icon={faEdit} />
-               </EditButton>
-               <DeleteButton onClick={handleDelete} type='button'>
+               </IconButton>
+               <IconButton onClick={handleDelete} type='button'>
                   <FontAwesomeIcon icon={faTrash} />
-               </DeleteButton>
+               </IconButton>
             </IconContainer>
          </Head>
          <AccordionContent>
             <Content>
-               <CreateQuestion
-                  questionName={questionName}
-                  setQuestionName={setQuestionName}
-               />
+               <CreateQuestion item={item!} />
             </Content>
          </AccordionContent>
       </QuestionEl>
