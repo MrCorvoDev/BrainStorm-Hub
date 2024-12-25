@@ -1,7 +1,7 @@
 import Accordion from '../../accordion/Accordion';
 import AccordionGroup from '../../accordion/AccordionGroup';
 import QuestionDnD from './QuestionDnD';
-import {useQuestions} from './QuestionsBox';
+import {useQuestions} from './QuestionsProvider';
 
 const Questions = () => {
    const {orderArray} = useQuestions();

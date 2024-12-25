@@ -13,7 +13,7 @@ import md from '../../../styles/utils/md';
 import {useAccordion} from '../../accordion/Accordion';
 import Input from '../Input';
 import Label from '../Label';
-import {OptionType, QuestionType, useQuestions} from './QuestionsBox';
+import {OptionType, QuestionType, useQuestions} from './QuestionsProvider';
 
 const CreateQuestionEl = styled.div`
    display: flex;

@@ -15,7 +15,7 @@ import {
 } from '@dnd-kit/sortable';
 
 import Questions from './Questions';
-import {useQuestions} from './QuestionsBox';
+import {useQuestions} from './QuestionsProvider';
 
 const QuestionsDnD = () => {
    const {orderArray, setOrderArray} = useQuestions();

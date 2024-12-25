@@ -10,6 +10,7 @@ import Button from '../components/form/Button';
 import Input from '../components/form/Input';
 import Label from '../components/form/Label';
 import QuestionsBox from '../components/form/question/QuestionsBox';
+import QuestionsProvider from '../components/form/question/QuestionsProvider';
 import Section from '../components/Section';
 import {layout} from '../styles/theme';
 import em from '../styles/utils/em';
@@ -38,7 +39,7 @@ const Grid = styled.div`
    }
 `;
 
-const CreateQuiz = () => {
+const CreateQuizEl = () => {
    const methods = useForm();
 
    const onSubmit: SubmitHandler<FieldValues> = async data => {
@@ -72,4 +73,11 @@ const CreateQuiz = () => {
       </Section>
    );
 };
+
+const CreateQuiz = () => (
+   <QuestionsProvider>
+      <CreateQuizEl />
+   </QuestionsProvider>
+);
+
 export default CreateQuiz;

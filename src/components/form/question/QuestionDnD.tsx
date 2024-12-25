@@ -5,7 +5,7 @@ import {useMemo} from 'react';
 
 import {useAccordion} from '../../accordion/Accordion';
 import Question from './Question';
-import {useQuestions} from './QuestionsBox';
+import {useQuestions} from './QuestionsProvider';
 
 interface QuestionDnDProps {
    id: string;
