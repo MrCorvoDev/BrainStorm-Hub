@@ -1,17 +1,7 @@
 import {createContext, useContext, useState} from 'react';
 
+import {QuestionType} from '../../../services/quizApi';
 import {ReactPropsChildrenType} from '../../../types/global';
-
-export interface OptionType {
-   value: string;
-   label: string;
-}
-export interface QuestionType {
-   id: string;
-   question: string;
-   options: OptionType[];
-   answer: OptionType;
-}
 
 interface questionsInitContext {
    questions: QuestionType[];
