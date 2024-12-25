@@ -10,8 +10,7 @@ const InputEl = styled.input<{$error: FieldError | undefined}>`
    padding: 0 ${em(20, InputFontSize)};
    color: ${props => props.theme.color4 as string};
    background: transparent;
-   border: 2px solid
-      ${props => (props.$error ? 'red' : (props.theme.color4 as string))};
+   border: 2px solid ${props => (props.$error ? 'red' : 'currentColor')};
    border-radius: 5px;
    width: 100%;
 `;
