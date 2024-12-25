@@ -157,7 +157,7 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
 
    const {control, trigger} = useFormContext();
 
-   const {isOpened} = useAccordion();
+   const {isOpened, toggle} = useAccordion();
    const {setValidateOpenedQuestionFn, setQuestions} = useQuestions();
 
    useEffect(() => {
@@ -185,9 +185,12 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
                return updatedQuestions;
             });
 
+            toggle();
+
             return isValid;
          });
       } else setValidateOpenedQuestionFn(() => () => true);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [
       isOpened,
       answer,
