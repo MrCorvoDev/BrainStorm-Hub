@@ -67,7 +67,8 @@ interface QuestionProps {
    handleElListeners: SyntheticListenerMap | undefined;
 }
 const Question = ({id, handleElListeners}: QuestionProps) => {
-   const {questions, setOrderArray, validateOpenedQuestionFn} = useQuestions();
+   const {questions, setOrderArray, setQuestions, validateOpenedQuestionFn} =
+      useQuestions();
    const {toggle} = useAccordion();
 
    const handleEdit = () => {
@@ -81,6 +82,9 @@ const Question = ({id, handleElListeners}: QuestionProps) => {
 
    const handleDelete = () => {
       setOrderArray(orderArray => orderArray.filter(itemId => itemId !== id));
+      setQuestions(questions =>
+         questions.filter(question => question.id !== id),
+      );
    };
 
    const item = questions.find(question => question.id === id);

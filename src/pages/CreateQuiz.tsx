@@ -1,3 +1,4 @@
+import {FormEvent} from 'react';
 import {
    FieldValues,
    FormProvider,
@@ -10,7 +11,9 @@ import Button from '../components/form/Button';
 import Input from '../components/form/Input';
 import Label from '../components/form/Label';
 import QuestionsBox from '../components/form/question/QuestionsBox';
-import QuestionsProvider from '../components/form/question/QuestionsProvider';
+import QuestionsProvider, {
+   useQuestions,
+} from '../components/form/question/QuestionsProvider';
 import Section from '../components/Section';
 import {layout} from '../styles/theme';
 import em from '../styles/utils/em';
@@ -41,10 +44,28 @@ const Grid = styled.div`
 
 const CreateQuizEl = () => {
    const methods = useForm();
+   const {validateOpenedQuestionFn, questions} = useQuestions();
 
    const onSubmit: SubmitHandler<FieldValues> = async data => {
-      console.log(data);
+      const newData = {
+         name: data.name as string,
+         description: data.description as string,
+         questions,
+      };
+
+      console.log(newData);
+
       await new Promise(resolve => setTimeout(resolve, 100));
+   };
+
+   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      (async () => {
+         const isSaveToContinue = await validateOpenedQuestionFn();
+         if (!isSaveToContinue) return;
+
+         await methods.handleSubmit(onSubmit)(e);
+      })().catch(console.error);
    };
 
    return (
@@ -52,9 +73,7 @@ const CreateQuizEl = () => {
          <div className='container'>
             <Headline>Create a Quiz</Headline>
             <FormProvider {...methods}>
-               <Form
-                  onSubmit={event => void methods.handleSubmit(onSubmit)(event)}
-               >
+               <Form onSubmit={handleSubmit}>
                   <Grid>
                      <Label title='Quiz Name'>
                         <Input name='name' />
