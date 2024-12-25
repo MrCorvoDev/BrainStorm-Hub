@@ -137,10 +137,10 @@ const getInputNames = (question: QuestionType) => {
    const id = question.id;
 
    const inputNames = question.options.map(
-      (_, index) => `${id}-option-${index}`,
+      (_, index) => `${id}.options.${index}`,
    );
-   inputNames.push(`${id}-question`);
-   inputNames.push(`${id}-answer`);
+   inputNames.push(`${id}.question`);
+   inputNames.push(`${id}.answer`);
 
    return inputNames;
 };
@@ -233,14 +233,14 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
          <Grid>
             <Label title='Question'>
                <Input
-                  name={`${item.id}-question`}
+                  name={`${item.id}.question`}
                   value={question}
                   onChange={e => setQuestion(e.target.value)}
                />
             </Label>
             <Label title='Answer'>
                <Controller
-                  name={`${item.id}-answer`}
+                  name={`${item.id}.answer`}
                   control={control}
                   defaultValue={answer}
                   rules={{required: 'Answer is required'}}
@@ -264,7 +264,7 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
             {options.map((option, index) => (
                <Option key={index}>
                   <OptionFlex>
-                     <OptionLabel htmlFor={`${item.id}-option-${index}`}>
+                     <OptionLabel htmlFor={`${item.id}.option.${index}`}>
                         Option {index + 1}
                      </OptionLabel>
                      {index > 1 && (
@@ -277,8 +277,8 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
                      )}
                   </OptionFlex>
                   <Input
-                     id={`${item.id}-option-${index}`}
-                     name={`${item.id}-option-${index}`}
+                     id={`${item.id}.option.${index}`}
+                     name={`${item.id}.option.${index}`}
                      value={option.label}
                      onChange={e => handleOptionChange(index, e.target.value)}
                   />

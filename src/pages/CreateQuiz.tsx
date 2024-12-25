@@ -56,10 +56,10 @@ const CreateQuiz = () => {
                >
                   <Grid>
                      <Label title='Quiz Name'>
-                        <Input name='quizName' />
+                        <Input name='name' />
                      </Label>
                      <Label title='Quiz Description'>
-                        <Input name='quizDescription' />
+                        <Input name='description' />
                      </Label>
                   </Grid>
                   <QuestionsBox />
