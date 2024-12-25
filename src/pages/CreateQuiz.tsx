@@ -5,6 +5,7 @@ import {
    SubmitHandler,
    useForm,
 } from 'react-hook-form';
+import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 
 import Button from '../components/form/Button';
@@ -15,6 +16,7 @@ import QuestionsProvider, {
    useQuestions,
 } from '../components/form/question/QuestionsProvider';
 import Section from '../components/Section';
+import {createQuiz} from '../services/quizApi';
 import {layout} from '../styles/theme';
 import em from '../styles/utils/em';
 import md from '../styles/utils/md';
@@ -43,6 +45,7 @@ const Grid = styled.div`
 `;
 
 const CreateQuizEl = () => {
+   const navigate = useNavigate();
    const methods = useForm();
    const {validateOpenedQuestionFn, questions} = useQuestions();
 
@@ -53,7 +56,8 @@ const CreateQuizEl = () => {
          questions,
       };
 
-      console.log(newData);
+      await createQuiz(newData);
+      await navigate('/');
 
       await new Promise(resolve => setTimeout(resolve, 100));
    };
