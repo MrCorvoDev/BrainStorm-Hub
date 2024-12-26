@@ -3,7 +3,7 @@ import {DefaultTheme} from 'styled-components';
 const CONTAINER = 1258;
 
 const breakpoints = {
-   md1: CONTAINER + 12,
+   md1: CONTAINER + 54,
    md2: 1024,
    md3: 768,
    md4: 480,
