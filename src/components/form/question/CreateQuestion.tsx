@@ -14,7 +14,7 @@ import md from '../../../styles/utils/md';
 import {useAccordion} from '../../accordion/Accordion';
 import Input from '../Input';
 import Label from '../Label';
-import {useQuestions} from './QuestionsProvider';
+import {useChangedQuestionsType, useQuestions} from './QuestionsProvider';
 
 const CreateQuestionEl = styled.div`
    display: flex;
@@ -170,36 +170,41 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
             options,
          };
 
-         type handleChangedQuestionsType = (
-            questions: QuestionType[],
-         ) => Promise<void>;
          setValidateOpenedQuestionFn(
-            () =>
-               async (handleChangedQuestions?: handleChangedQuestionsType) => {
-                  const isValid = await trigger(getInputNames(currentQuestion));
-                  if (!isValid) return isValid;
+            () => async (handleChangedQuestions?: useChangedQuestionsType) => {
+               const isValid = await trigger(getInputNames(currentQuestion));
+               if (!isValid) return isValid;
 
-                  const updatedQuestions = [...questions];
-                  const questionIndex = updatedQuestions.findIndex(
-                     q => q.id === item.id,
-                  );
-                  updatedQuestions[questionIndex] = {
-                     ...updatedQuestions[questionIndex],
-                     ...currentQuestion,
-                  };
+               const updatedQuestions = [...questions];
+               const questionIndex = updatedQuestions.findIndex(
+                  q => q.id === item.id,
+               );
+               updatedQuestions[questionIndex] = {
+                  ...updatedQuestions[questionIndex],
+                  ...currentQuestion,
+               };
 
-                  if (typeof handleChangedQuestions === 'function') {
-                     await handleChangedQuestions(updatedQuestions);
-                  }
+               if (typeof handleChangedQuestions === 'function') {
+                  await handleChangedQuestions(updatedQuestions);
+               }
 
-                  setQuestions(updatedQuestions);
+               setQuestions(updatedQuestions);
 
-                  toggle();
+               toggle();
 
-                  return isValid;
-               },
+               return isValid;
+            },
          );
-      } else setValidateOpenedQuestionFn(() => () => true);
+      } else
+         setValidateOpenedQuestionFn(
+            () => async (handleChangedQuestions?: useChangedQuestionsType) => {
+               if (typeof handleChangedQuestions === 'function') {
+                  await handleChangedQuestions(questions);
+               }
+
+               return true;
+            },
+         );
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [
       isOpened,

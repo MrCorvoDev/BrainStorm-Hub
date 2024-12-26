@@ -12,13 +12,9 @@ interface questionsInitContext {
    setQuestions: React.Dispatch<React.SetStateAction<QuestionType[]>>;
    orderArray: string[];
    setOrderArray: React.Dispatch<React.SetStateAction<string[]>>;
-   validateOpenedQuestionFn: (
-      fn?: useChangedQuestionsType,
-   ) => Promise<boolean> | boolean;
+   validateOpenedQuestionFn: (fn?: useChangedQuestionsType) => Promise<boolean>;
    setValidateOpenedQuestionFn: React.Dispatch<
-      React.SetStateAction<
-         (fn?: useChangedQuestionsType) => Promise<boolean> | boolean
-      >
+      React.SetStateAction<(fn?: useChangedQuestionsType) => Promise<boolean>>
    >;
 }
 const initContext: questionsInitContext = {
@@ -26,7 +22,7 @@ const initContext: questionsInitContext = {
    setQuestions: () => void 0,
    orderArray: [],
    setOrderArray: () => void 0,
-   validateOpenedQuestionFn: () => true,
+   validateOpenedQuestionFn: async () => Promise.resolve(true),
    setValidateOpenedQuestionFn: () => void 0,
 };
 
@@ -37,8 +33,8 @@ const QuestionsProvider = ({children}: ReactPropsChildrenType) => {
    const [questions, setQuestions] = useState<QuestionType[]>([]);
    const [orderArray, setOrderArray] = useState<string[]>([]);
    const [validateOpenedQuestionFn, setValidateOpenedQuestionFn] = useState<
-      (fn?: useChangedQuestionsType) => Promise<boolean> | boolean
-   >(() => () => true); // Default function returning a resolved Promise<boolean>
+      (fn?: useChangedQuestionsType) => Promise<boolean>
+   >(() => () => Promise.resolve(true));
 
    return (
       <QuestionsContext.Provider
