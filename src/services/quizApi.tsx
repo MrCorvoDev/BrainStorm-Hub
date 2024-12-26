@@ -28,9 +28,11 @@ export const createQuiz = async (quiz: QuizType) => {
    }
 };
 
+export const quizzesURL = '/quizzes';
+
 export const getAllQuizzes = async (): Promise<QuizType[]> => {
    try {
-      const response = await api.get('/quizzes');
+      const response = await api.get(quizzesURL);
       return response.data as QuizType[];
    } catch (error) {
       console.error('Error fetching quizzes:', error);
@@ -40,7 +42,7 @@ export const getAllQuizzes = async (): Promise<QuizType[]> => {
 
 export const getQuiz = async (id: string): Promise<QuizType> => {
    try {
-      const response = await api.get(`/quizzes/${id}`);
+      const response = await api.get(`${quizzesURL}/${id}`);
       return response.data as QuizType;
    } catch (error) {
       console.error('Error fetching quiz:', error);
