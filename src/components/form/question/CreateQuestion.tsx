@@ -158,7 +158,8 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
    const {control, trigger} = useFormContext();
 
    const {isOpened, toggle} = useAccordion();
-   const {setValidateOpenedQuestionFn, setQuestions} = useQuestions();
+   const {setValidateOpenedQuestionFn, setQuestions, questions} =
+      useQuestions();
 
    useEffect(() => {
       if (isOpened) {
@@ -169,26 +170,35 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
             options,
          };
 
-         setValidateOpenedQuestionFn(() => async () => {
-            const isValid = await trigger(getInputNames(currentQuestion));
-            if (!isValid) return isValid;
+         type handleChangedQuestionsType = (
+            questions: QuestionType[],
+         ) => Promise<void>;
+         setValidateOpenedQuestionFn(
+            () =>
+               async (handleChangedQuestions?: handleChangedQuestionsType) => {
+                  const isValid = await trigger(getInputNames(currentQuestion));
+                  if (!isValid) return isValid;
 
-            setQuestions(prev => {
-               const updatedQuestions = [...prev];
-               const questionIndex = updatedQuestions.findIndex(
-                  q => q.id === item.id,
-               );
-               updatedQuestions[questionIndex] = {
-                  ...updatedQuestions[questionIndex],
-                  ...currentQuestion,
-               };
-               return updatedQuestions;
-            });
+                  const updatedQuestions = [...questions];
+                  const questionIndex = updatedQuestions.findIndex(
+                     q => q.id === item.id,
+                  );
+                  updatedQuestions[questionIndex] = {
+                     ...updatedQuestions[questionIndex],
+                     ...currentQuestion,
+                  };
 
-            toggle();
+                  if (typeof handleChangedQuestions === 'function') {
+                     await handleChangedQuestions(updatedQuestions);
+                  }
 
-            return isValid;
-         });
+                  setQuestions(updatedQuestions);
+
+                  toggle();
+
+                  return isValid;
+               },
+         );
       } else setValidateOpenedQuestionFn(() => () => true);
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [

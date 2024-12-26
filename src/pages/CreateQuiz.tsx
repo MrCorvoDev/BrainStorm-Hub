@@ -1,11 +1,6 @@
 import {nanoid} from 'nanoid';
 import {FormEvent} from 'react';
-import {
-   FieldValues,
-   FormProvider,
-   SubmitHandler,
-   useForm,
-} from 'react-hook-form';
+import {FieldValues, FormProvider, useForm} from 'react-hook-form';
 import {useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -17,7 +12,7 @@ import QuestionsProvider, {
    useQuestions,
 } from '../components/form/question/QuestionsProvider';
 import Section from '../components/Section';
-import {createQuiz} from '../services/quizApi';
+import {createQuiz, QuestionType} from '../services/quizApi';
 import {layout} from '../styles/theme';
 import em from '../styles/utils/em';
 import md from '../styles/utils/md';
@@ -48,9 +43,9 @@ const Grid = styled.div`
 const CreateQuizEl = () => {
    const navigate = useNavigate();
    const methods = useForm();
-   const {validateOpenedQuestionFn, questions} = useQuestions();
+   const {validateOpenedQuestionFn} = useQuestions();
 
-   const onSubmit: SubmitHandler<FieldValues> = async data => {
+   const onSubmit = async (data: FieldValues, questions: QuestionType[]) => {
       const newData = {
          id: nanoid(),
          name: data.name as string,
@@ -60,17 +55,16 @@ const CreateQuizEl = () => {
 
       await createQuiz(newData);
       await navigate('/');
-
-      await new Promise(resolve => setTimeout(resolve, 100));
    };
 
    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       (async () => {
-         const isSaveToContinue = await validateOpenedQuestionFn();
-         if (!isSaveToContinue) return;
-
-         await methods.handleSubmit(onSubmit)(e);
+         await validateOpenedQuestionFn(async updatedQuestions => {
+            await methods.handleSubmit(data =>
+               onSubmit(data, updatedQuestions),
+            )(e);
+         });
       })().catch(console.error);
    };
 
