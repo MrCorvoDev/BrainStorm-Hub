@@ -11,6 +11,7 @@ const AccordionContent = ({children}: ReactPropsChildrenType) => {
 
    return (
       <motion.div
+         style={isOpened ? {visibility: 'visible'} : {visibility: 'hidden'}}
          initial={animation}
          animate={animation}
          transition={{

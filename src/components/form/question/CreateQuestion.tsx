@@ -14,7 +14,7 @@ import md from '../../../styles/utils/md';
 import {useAccordion} from '../../accordion/Accordion';
 import Input from '../Input';
 import Label from '../Label';
-import {useQuestions} from './QuestionsProvider';
+import {useChangedQuestionsType, useQuestions} from './QuestionsProvider';
 
 const CreateQuestionEl = styled.div`
    display: flex;
@@ -158,7 +158,8 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
    const {control, trigger} = useFormContext();
 
    const {isOpened, toggle} = useAccordion();
-   const {setValidateOpenedQuestionFn, setQuestions} = useQuestions();
+   const {setValidateOpenedQuestionFn, setQuestions, questions} =
+      useQuestions();
 
    useEffect(() => {
       if (isOpened) {
@@ -169,12 +170,12 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
             options,
          };
 
-         setValidateOpenedQuestionFn(() => async () => {
-            const isValid = await trigger(getInputNames(currentQuestion));
-            if (!isValid) return isValid;
+         setValidateOpenedQuestionFn(
+            () => async (handleChangedQuestions?: useChangedQuestionsType) => {
+               const isValid = await trigger(getInputNames(currentQuestion));
+               if (!isValid) return isValid;
 
-            setQuestions(prev => {
-               const updatedQuestions = [...prev];
+               const updatedQuestions = [...questions];
                const questionIndex = updatedQuestions.findIndex(
                   q => q.id === item.id,
                );
@@ -182,14 +183,28 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
                   ...updatedQuestions[questionIndex],
                   ...currentQuestion,
                };
-               return updatedQuestions;
-            });
 
-            toggle();
+               if (typeof handleChangedQuestions === 'function') {
+                  await handleChangedQuestions(updatedQuestions);
+               }
 
-            return isValid;
-         });
-      } else setValidateOpenedQuestionFn(() => () => true);
+               setQuestions(updatedQuestions);
+
+               toggle();
+
+               return isValid;
+            },
+         );
+      } else
+         setValidateOpenedQuestionFn(
+            () => async (handleChangedQuestions?: useChangedQuestionsType) => {
+               if (typeof handleChangedQuestions === 'function') {
+                  await handleChangedQuestions(questions);
+               }
+
+               return true;
+            },
+         );
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [
       isOpened,
