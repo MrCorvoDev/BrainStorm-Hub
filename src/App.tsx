@@ -7,7 +7,13 @@ import Home from './pages/Home';
 
 const App = () => (
    <div className='app'>
-      <BrowserRouter>
+      <BrowserRouter
+         basename={
+            import.meta.env.MODE === 'development'
+               ? '/'
+               : (import.meta.env.VITE_PRODUCTION_ROOT as string)
+         }
+      >
          <Header />
          <div className='content'>
             <Routes>

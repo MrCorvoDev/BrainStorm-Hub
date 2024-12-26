@@ -8,7 +8,7 @@ export default ({mode}: {mode: string}) => {
    const env = loadEnv(mode, process.cwd(), '');
 
    return defineConfig({
-      base: mode === 'development' ? '/' : env.PRODUCTION_ROOT,
+      base: mode === 'development' ? '/' : env.VITE_PRODUCTION_ROOT,
       plugins: [
          react(),
          imagetools(),
