@@ -1,3 +1,4 @@
+import {nanoid} from 'nanoid';
 import {FormEvent} from 'react';
 import {
    FieldValues,
@@ -51,6 +52,7 @@ const CreateQuizEl = () => {
 
    const onSubmit: SubmitHandler<FieldValues> = async data => {
       const newData = {
+         id: nanoid(),
          name: data.name as string,
          description: data.description as string,
          questions,

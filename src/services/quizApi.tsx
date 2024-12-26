@@ -15,6 +15,7 @@ export interface QuestionType {
    answer: OptionType;
 }
 export interface QuizType {
+   id: string;
    name: string;
    description: string;
    questions: QuestionType[];
