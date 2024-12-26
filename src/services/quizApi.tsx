@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-   baseURL: 'https://brainstorm-hub-server.onrender.com',
+   baseURL: 'https://server.mister-corvo.com/brainstorm-hub',
 });
 
 export interface OptionType {
