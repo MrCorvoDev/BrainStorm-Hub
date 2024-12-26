@@ -6,6 +6,9 @@ const NullStyles = css`
       margin: 0;
       border: 0;
       box-sizing: border-box;
+      &:focus {
+         outline-color: transparent;
+      }
    }
    *:before,
    *:after {

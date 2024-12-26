@@ -6,7 +6,7 @@ import em from '../styles/utils/em';
 import md from '../styles/utils/md';
 
 const FooterEL = styled.footer`
-   background-color: #171717;
+   background-color: ${props => props.theme.color2 as string};
    padding: ${em(24)} 0;
 `;
 

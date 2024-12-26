@@ -4,17 +4,20 @@ const api = axios.create({
    baseURL: 'https://brainstorm-hub-server.onrender.com',
 });
 
-export interface QuizQuestionType {
-   type: 'boolean' | 'multiple';
+export interface OptionType {
+   value: string;
+   label: string;
+}
+export interface QuestionType {
+   id: string;
    question: string;
-   options: string[];
-   answer: string;
+   options: OptionType[];
+   answer: OptionType;
 }
 export interface QuizType {
-   author: string;
-   title: string;
+   name: string;
    description: string;
-   questions: QuizQuestionType[];
+   questions: QuestionType[];
 }
 export const createQuiz = async (quiz: QuizType) => {
    try {

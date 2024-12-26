@@ -12,7 +12,10 @@ interface MenuProps {
    $isMenuOpened: boolean;
 }
 const MenuEl = styled.div<MenuProps>`
-   --background: ${Color('#000').alpha(0.7).hexa()};
+   --background: ${({theme}) =>
+      Color(theme.color2 as string)
+         .alpha(0.7)
+         .hexa()};
    --blur: 15px;
    display: flex;
    align-items: center;
