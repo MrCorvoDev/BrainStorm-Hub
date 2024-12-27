@@ -1,3 +1,4 @@
+import {HTMLAttributes} from 'react';
 import styled from 'styled-components';
 
 import em from '../styles/utils/em';
@@ -7,7 +8,10 @@ const SectionEl = styled.section`
    padding: ${em(64)} 0;
 `;
 
-const Section = ({children}: ReactPropsChildrenType) => (
-   <SectionEl>{children}</SectionEl>
+const Section = ({
+   children,
+   ...props
+}: ReactPropsChildrenType & HTMLAttributes<HTMLElement>) => (
+   <SectionEl {...props}>{children}</SectionEl>
 );
 export default Section;

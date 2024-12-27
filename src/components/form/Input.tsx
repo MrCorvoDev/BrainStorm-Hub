@@ -1,3 +1,4 @@
+import {InputHTMLAttributes} from 'react';
 import {FieldError, useFormContext} from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -15,7 +16,7 @@ const InputEl = styled.input<{$error: FieldError | undefined}>`
    width: 100%;
 `;
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
    name: string;
    placeholder?: string | undefined;
    required?: boolean;
