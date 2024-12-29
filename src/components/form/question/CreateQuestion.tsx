@@ -158,8 +158,12 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
    const {control, trigger} = useFormContext();
 
    const {isOpened, toggle} = useAccordion();
-   const {setValidateOpenedQuestionFn, setQuestions, questions} =
-      useQuestions();
+   const {
+      setValidateOpenedQuestionFn,
+      setQuestions,
+      questions,
+      defaultValidateOpenedQuestionFn,
+   } = useQuestions();
 
    useEffect(() => {
       if (isOpened) {
@@ -195,16 +199,7 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
                return isValid;
             },
          );
-      } else
-         setValidateOpenedQuestionFn(
-            () => async (handleChangedQuestions?: useChangedQuestionsType) => {
-               if (typeof handleChangedQuestions === 'function') {
-                  await handleChangedQuestions(questions);
-               }
-
-               return true;
-            },
-         );
+      } else setValidateOpenedQuestionFn(defaultValidateOpenedQuestionFn);
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [
       isOpened,

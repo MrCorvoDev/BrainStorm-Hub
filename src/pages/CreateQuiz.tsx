@@ -53,6 +53,8 @@ const CreateQuizEl = () => {
          questions,
       };
 
+      if (!questions.length) return;
+
       await createQuiz(newData);
       await navigate('/');
    };
