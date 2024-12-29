@@ -30,8 +30,16 @@ const Title = styled.h2`
    font-size: ${em(28)};
    font-weight: 700;
    overflow: hidden;
-   text-overflow: ellipsis;
-   white-space: nowrap;
+   @media (${md(layout.md3, 'min')}) {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+   }
+   @media (${md(layout.md3)}) {
+      font-size: ${em(25)};
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+   }
 `;
 const Description = styled.p`
    font-size: ${em(20)};
