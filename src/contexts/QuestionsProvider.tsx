@@ -1,7 +1,7 @@
-import {createContext, useContext, useState} from 'react';
+import {createContext, useState} from 'react';
 
-import {QuestionType} from '../../../services/quizApi';
-import {ReactPropsChildrenType} from '../../../types/global';
+import {QuestionType} from '../services/quizApi';
+import {ReactPropsChildrenType} from '../types/global';
 
 export type useChangedQuestionsType = (
    questions: QuestionType[],
@@ -20,8 +20,7 @@ interface questionsInitContext {
       fn?: useChangedQuestionsType,
    ) => Promise<boolean>;
 }
-const QuestionsContext = createContext({} as questionsInitContext);
-export const useQuestions = () => useContext(QuestionsContext);
+export const QuestionsContext = createContext({} as questionsInitContext);
 
 const QuestionsProvider = ({children}: ReactPropsChildrenType) => {
    const [questions, setQuestions] = useState<QuestionType[]>([]);

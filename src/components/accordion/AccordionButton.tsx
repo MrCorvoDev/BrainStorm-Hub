@@ -1,7 +1,7 @@
 import {ButtonHTMLAttributes} from 'react';
 
+import useAccordion from '../../hooks/useAccordion';
 import {ReactPropsChildrenType} from '../../types/global';
-import {useAccordion} from './Accordion';
 
 const AccordionButton = ({
    children,

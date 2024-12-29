@@ -7,12 +7,12 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
+import useAccordion from '../../../hooks/useAccordion';
+import useQuestions from '../../../hooks/useQuestions';
 import IconButtonStyles from '../../../styles/IconButtonStyles';
 import em from '../../../styles/utils/em';
-import {useAccordion} from '../../accordion/Accordion';
 import AccordionContent from '../../accordion/AccordionContent';
 import CreateQuestion from './CreateQuestion';
-import {useQuestions} from './QuestionsProvider';
 
 const QuestionEl = styled.div`
    padding: ${em(24)} ${em(8)};

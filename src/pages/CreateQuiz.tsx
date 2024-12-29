@@ -8,10 +8,9 @@ import Button from '../components/form/Button';
 import Input from '../components/form/Input';
 import Label from '../components/form/Label';
 import QuestionsBox from '../components/form/question/QuestionsBox';
-import QuestionsProvider, {
-   useQuestions,
-} from '../components/form/question/QuestionsProvider';
 import Section from '../components/Section';
+import QuestionsProvider from '../contexts/QuestionsProvider';
+import useQuestions from '../hooks/useQuestions';
 import {createQuiz, QuestionType} from '../services/quizApi';
 import {layout} from '../styles/theme';
 import em from '../styles/utils/em';

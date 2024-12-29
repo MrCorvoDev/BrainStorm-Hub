@@ -6,15 +6,16 @@ import {Controller, useFormContext} from 'react-hook-form';
 import Select from 'react-select';
 import styled from 'styled-components';
 
+import {useChangedQuestionsType} from '../../../contexts/QuestionsProvider';
+import useAccordion from '../../../hooks/useAccordion';
+import useQuestions from '../../../hooks/useQuestions';
 import {OptionType, QuestionType} from '../../../services/quizApi';
 import IconButtonStyles from '../../../styles/IconButtonStyles';
 import {layout} from '../../../styles/theme';
 import em from '../../../styles/utils/em';
 import md from '../../../styles/utils/md';
-import {useAccordion} from '../../accordion/Accordion';
 import Input from '../Input';
 import Label from '../Label';
-import {useChangedQuestionsType, useQuestions} from './QuestionsProvider';
 
 const CreateQuestionEl = styled.div`
    display: flex;

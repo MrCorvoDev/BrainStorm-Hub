@@ -1,19 +1,19 @@
-import Accordion from '../../accordion/Accordion';
-import AccordionGroup from '../../accordion/AccordionGroup';
+import AccordionGroupProvider from '../../../contexts/AccordionGroupProvider';
+import AccordionProvider from '../../../contexts/AccordionProvider';
+import useQuestions from '../../../hooks/useQuestions';
 import QuestionDnD from './QuestionDnD';
-import {useQuestions} from './QuestionsProvider';
 
 const Questions = () => {
    const {orderArray} = useQuestions();
 
    return (
-      <AccordionGroup>
+      <AccordionGroupProvider>
          {orderArray.map(id => (
-            <Accordion key={id}>
+            <AccordionProvider key={id}>
                <QuestionDnD id={id} />
-            </Accordion>
+            </AccordionProvider>
          ))}
-      </AccordionGroup>
+      </AccordionGroupProvider>
    );
 };
 export default Questions;

@@ -1,21 +1,20 @@
-import {createContext, useContext, useEffect, useState} from 'react';
+import {createContext, useEffect, useState} from 'react';
 
-import {ReactChildrenType} from '../../types/global';
-import {useAccordionGroup} from './AccordionGroup';
+import useAccordionGroup from '../hooks/useAccordionGroup';
+import {ReactChildrenType} from '../types/global';
 
 interface AccordionContextType {
    toggle: () => void;
    isOpened: boolean;
 }
-const AccordionContext = createContext({} as AccordionContextType);
-export const useAccordion = () => useContext(AccordionContext);
+export const AccordionContext = createContext({} as AccordionContextType);
 
 interface AccordionProps {
    defaultOpened?: boolean;
    index?: number;
    children: ReactChildrenType;
 }
-const Accordion = ({
+const AccordionProvider = ({
    defaultOpened = false,
    index,
    children,
@@ -44,4 +43,4 @@ const Accordion = ({
    );
 };
 
-export default Accordion;
+export default AccordionProvider;

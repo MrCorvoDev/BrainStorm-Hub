@@ -3,13 +3,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {nanoid} from 'nanoid';
 import styled from 'styled-components';
 
+import useQuestions from '../../../hooks/useQuestions';
 import ButtonStyles from '../../../styles/ButtonStyles';
 import IconButtonStyles from '../../../styles/IconButtonStyles';
 import {layout} from '../../../styles/theme';
 import em from '../../../styles/utils/em';
 import md from '../../../styles/utils/md';
 import QuestionsDnD from './QuestionsDnD';
-import {useQuestions} from './QuestionsProvider';
 
 const QuestionsBoxEl = styled.div`
    display: flex;

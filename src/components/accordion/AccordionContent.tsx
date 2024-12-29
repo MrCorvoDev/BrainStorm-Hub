@@ -1,7 +1,7 @@
 import {motion} from 'motion/react';
 
+import useAccordion from '../../hooks/useAccordion';
 import {ReactPropsChildrenType} from '../../types/global';
-import {useAccordion} from './Accordion';
 
 const AccordionContent = ({children}: ReactPropsChildrenType) => {
    const {isOpened} = useAccordion();

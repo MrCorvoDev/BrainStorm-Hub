@@ -3,7 +3,6 @@ import {
    cloneElement,
    createContext,
    ReactElement,
-   useContext,
    useState,
 } from 'react';
 
@@ -11,23 +10,21 @@ interface AccordionGroupContextType {
    activeIndex: number | undefined;
    setActiveIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
-const AccordionGroupContext = createContext({} as AccordionGroupContextType);
-export const useAccordionGroup = () => useContext(AccordionGroupContext);
+export const AccordionGroupContext = createContext(
+   {} as AccordionGroupContextType,
+);
 
-interface ChildProps {
-   index: number;
-}
 interface AccordionGroupProps {
    children: ReactElement[];
 }
-const AccordionGroup = ({children}: AccordionGroupProps) => {
+const AccordionGroupProvider = ({children}: AccordionGroupProps) => {
    const [activeIndex, setActiveIndex] =
       useState<AccordionGroupContextType['activeIndex']>();
 
    return (
       <AccordionGroupContext.Provider value={{activeIndex, setActiveIndex}}>
          {Children.map(children, (child, index) =>
-            cloneElement(child as ReactElement<ChildProps>, {
+            cloneElement(child as ReactElement<{index: number}>, {
                key: index,
                index,
             }),
@@ -36,4 +33,4 @@ const AccordionGroup = ({children}: AccordionGroupProps) => {
    );
 };
 
-export default AccordionGroup;
+export default AccordionGroupProvider;
