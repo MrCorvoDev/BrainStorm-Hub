@@ -14,8 +14,8 @@ import {
    verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
+import useQuestions from '../../../hooks/useQuestions';
 import Questions from './Questions';
-import {useQuestions} from './QuestionsProvider';
 
 const QuestionsDnD = () => {
    const {orderArray, setOrderArray} = useQuestions();

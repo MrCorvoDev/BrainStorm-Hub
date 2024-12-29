@@ -7,12 +7,12 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
+import useAccordion from '../../../hooks/useAccordion';
+import useQuestions from '../../../hooks/useQuestions';
 import IconButtonStyles from '../../../styles/IconButtonStyles';
 import em from '../../../styles/utils/em';
-import {useAccordion} from '../../accordion/Accordion';
 import AccordionContent from '../../accordion/AccordionContent';
 import CreateQuestion from './CreateQuestion';
-import {useQuestions} from './QuestionsProvider';
 
 const QuestionEl = styled.div`
    padding: ${em(24)} ${em(8)};
@@ -71,13 +71,11 @@ const Question = ({id, handleElListeners}: QuestionProps) => {
       useQuestions();
    const {toggle} = useAccordion();
 
-   const handleEdit = () => {
-      (async () => {
-         const isSafeToContinue = await validateOpenedQuestionFn();
-         if (!isSafeToContinue) return;
+   const handleEdit = async () => {
+      const isSafeToContinue = await validateOpenedQuestionFn();
+      if (!isSafeToContinue) return;
 
-         toggle();
-      })().catch(console.error);
+      toggle();
    };
 
    const handleDelete = () => {
@@ -99,7 +97,7 @@ const Question = ({id, handleElListeners}: QuestionProps) => {
                <span>{item?.question}</span>
             </Flex>
             <IconContainer>
-               <IconButton onClick={handleEdit} type='button'>
+               <IconButton onClick={() => void handleEdit()} type='button'>
                   <FontAwesomeIcon icon={faEdit} />
                </IconButton>
                <IconButton onClick={handleDelete} type='button'>

@@ -3,13 +3,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {nanoid} from 'nanoid';
 import styled from 'styled-components';
 
+import useQuestions from '../../../hooks/useQuestions';
 import ButtonStyles from '../../../styles/ButtonStyles';
 import IconButtonStyles from '../../../styles/IconButtonStyles';
 import {layout} from '../../../styles/theme';
 import em from '../../../styles/utils/em';
 import md from '../../../styles/utils/md';
 import QuestionsDnD from './QuestionsDnD';
-import {useQuestions} from './QuestionsProvider';
 
 const QuestionsBoxEl = styled.div`
    display: flex;
@@ -50,32 +50,33 @@ const QuestionsBox = () => {
    const {validateOpenedQuestionFn, setOrderArray, setQuestions} =
       useQuestions();
 
-   const handleAddQuestion = () => {
-      (async () => {
-         const isSafeToContinue = await validateOpenedQuestionFn();
-         if (!isSafeToContinue) return;
+   const handleAddQuestion = async () => {
+      const isSafeToContinue = await validateOpenedQuestionFn();
+      if (!isSafeToContinue) return;
 
-         const newId = nanoid();
-         setOrderArray(items => [...items, newId]);
-         setQuestions(items => [
-            ...items,
-            {
-               id: newId,
-               question: 'New Question',
-               options: [
-                  {value: 'true', label: 'True'},
-                  {value: 'false', label: 'False'},
-               ],
-               answer: {value: 'true', label: 'True'},
-            },
-         ]);
-      })().catch(console.error);
+      const newId = nanoid();
+      setOrderArray(items => [...items, newId]);
+      setQuestions(items => [
+         ...items,
+         {
+            id: newId,
+            question: 'New Question',
+            options: [
+               {value: 'true', label: 'True'},
+               {value: 'false', label: 'False'},
+            ],
+            answer: {value: 'true', label: 'True'},
+         },
+      ]);
    };
 
    return (
       <QuestionsBoxEl>
          <QuestionsDnD />
-         <AddQuestionButton type='button' onClick={handleAddQuestion}>
+         <AddQuestionButton
+            type='button'
+            onClick={() => void handleAddQuestion()}
+         >
             <span>Create new question</span>
             <FontAwesomeIcon icon={faPlus} />
          </AddQuestionButton>

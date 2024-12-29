@@ -8,10 +8,9 @@ import Button from '../components/form/Button';
 import Input from '../components/form/Input';
 import Label from '../components/form/Label';
 import QuestionsBox from '../components/form/question/QuestionsBox';
-import QuestionsProvider, {
-   useQuestions,
-} from '../components/form/question/QuestionsProvider';
 import Section from '../components/Section';
+import QuestionsProvider from '../contexts/QuestionsProvider';
+import useQuestions from '../hooks/useQuestions';
 import {createQuiz, QuestionType} from '../services/quizApi';
 import {layout} from '../styles/theme';
 import em from '../styles/utils/em';
@@ -53,19 +52,20 @@ const CreateQuizEl = () => {
          questions,
       };
 
+      if (!questions.length) return;
+
       await createQuiz(newData);
       await navigate('/');
    };
 
-   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      (async () => {
-         await validateOpenedQuestionFn(async updatedQuestions => {
-            await methods.handleSubmit(data =>
-               onSubmit(data, updatedQuestions),
-            )(e);
-         });
-      })().catch(console.error);
+
+      await validateOpenedQuestionFn(async updatedQuestions => {
+         await methods.handleSubmit(data => onSubmit(data, updatedQuestions))(
+            e,
+         );
+      });
    };
 
    return (
@@ -73,7 +73,7 @@ const CreateQuizEl = () => {
          <div className='container'>
             <Headline>Create a Quiz</Headline>
             <FormProvider {...methods}>
-               <Form onSubmit={handleSubmit}>
+               <Form onSubmit={e => void handleSubmit(e)}>
                   <Grid>
                      <Label title='Quiz Name'>
                         <Input name='name' />

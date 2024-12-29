@@ -3,9 +3,9 @@ import {useSortable} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import {useMemo} from 'react';
 
-import {useAccordion} from '../../accordion/Accordion';
+import useAccordion from '../../../hooks/useAccordion';
+import useQuestions from '../../../hooks/useQuestions';
 import Question from './Question';
-import {useQuestions} from './QuestionsProvider';
 
 interface QuestionDnDProps {
    id: string;

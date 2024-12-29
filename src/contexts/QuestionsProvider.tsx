@@ -1,7 +1,7 @@
-import {createContext, useContext, useState} from 'react';
+import {createContext, useState} from 'react';
 
-import {QuestionType} from '../../../services/quizApi';
-import {ReactPropsChildrenType} from '../../../types/global';
+import {QuestionType} from '../services/quizApi';
+import {ReactPropsChildrenType} from '../types/global';
 
 export type useChangedQuestionsType = (
    questions: QuestionType[],
@@ -16,25 +16,27 @@ interface questionsInitContext {
    setValidateOpenedQuestionFn: React.Dispatch<
       React.SetStateAction<(fn?: useChangedQuestionsType) => Promise<boolean>>
    >;
+   defaultValidateOpenedQuestionFn: () => (
+      fn?: useChangedQuestionsType,
+   ) => Promise<boolean>;
 }
-const initContext: questionsInitContext = {
-   questions: [],
-   setQuestions: () => void 0,
-   orderArray: [],
-   setOrderArray: () => void 0,
-   validateOpenedQuestionFn: async () => Promise.resolve(true),
-   setValidateOpenedQuestionFn: () => void 0,
-};
-
-const QuestionsContext = createContext<questionsInitContext>(initContext);
-export const useQuestions = () => useContext(QuestionsContext);
+export const QuestionsContext = createContext({} as questionsInitContext);
 
 const QuestionsProvider = ({children}: ReactPropsChildrenType) => {
    const [questions, setQuestions] = useState<QuestionType[]>([]);
    const [orderArray, setOrderArray] = useState<string[]>([]);
+
+   const defaultValidateOpenedQuestionFn =
+      () => async (handleChangedQuestions?: useChangedQuestionsType) => {
+         if (typeof handleChangedQuestions === 'function') {
+            await handleChangedQuestions(questions);
+         }
+
+         return true;
+      };
    const [validateOpenedQuestionFn, setValidateOpenedQuestionFn] = useState<
       (fn?: useChangedQuestionsType) => Promise<boolean>
-   >(() => () => Promise.resolve(true));
+   >(defaultValidateOpenedQuestionFn);
 
    return (
       <QuestionsContext.Provider
@@ -45,6 +47,7 @@ const QuestionsProvider = ({children}: ReactPropsChildrenType) => {
             setOrderArray,
             validateOpenedQuestionFn,
             setValidateOpenedQuestionFn,
+            defaultValidateOpenedQuestionFn,
          }}
       >
          {children}
