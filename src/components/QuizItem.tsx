@@ -24,13 +24,21 @@ const Info = styled.div`
    display: flex;
    flex-direction: column;
    gap: ${em(12)};
+   overflow: hidden;
 `;
 const Title = styled.h2`
    font-size: ${em(28)};
    font-weight: 700;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
 `;
 const Description = styled.p`
    font-size: ${em(20)};
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 3;
+   overflow: hidden;
 `;
 const ButtonEl = styled(Link)`
    ${ButtonStyles}
