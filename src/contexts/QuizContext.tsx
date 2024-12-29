@@ -1,5 +1,5 @@
 import {Variants} from 'motion/react';
-import {createContext, MouseEventHandler, useState} from 'react';
+import {createContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import useQuizFromParams from '../hooks/useQuizFromParams';
@@ -17,10 +17,10 @@ interface QuizContextType {
    totalQuestions: number;
    totalAnswered: number;
    optionsLength: number;
-   handleReset: MouseEventHandler<HTMLButtonElement>;
-   handleGoHome: MouseEventHandler<HTMLButtonElement>;
+   handleReset: () => void;
+   handleGoHome: () => void;
    handleOptionSelect: (option: OptionType) => void;
-   handlePlay: MouseEventHandler<HTMLButtonElement>;
+   handlePlay: () => void;
    fadeIn: Variants;
    fadeUp: Variants;
 }
