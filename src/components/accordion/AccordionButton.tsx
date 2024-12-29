@@ -1,15 +1,16 @@
-import {ReactChildrenType} from '../../types/global';
+import {ButtonHTMLAttributes} from 'react';
+
+import {ReactPropsChildrenType} from '../../types/global';
 import {useAccordion} from './Accordion';
 
-interface AccordionButtonProps {
-   className?: string;
-   children: ReactChildrenType;
-}
-const AccordionButton = ({className, children}: AccordionButtonProps) => {
+const AccordionButton = ({
+   children,
+   ...props
+}: ReactPropsChildrenType & ButtonHTMLAttributes<HTMLButtonElement>) => {
    const {toggle} = useAccordion();
 
    return (
-      <button type='button' onClick={toggle} className={className}>
+      <button type='button' onClick={toggle} {...props}>
          {children}
       </button>
    );
