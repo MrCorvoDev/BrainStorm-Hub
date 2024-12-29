@@ -3,16 +3,11 @@ import {createContext, useContext, useEffect, useState} from 'react';
 import {ReactChildrenType} from '../../types/global';
 import {useAccordionGroup} from './AccordionGroup';
 
-interface initContextType {
+interface AccordionContextType {
    toggle: () => void;
    isOpened: boolean;
 }
-const initContext: initContextType = {
-   toggle: () => void 0,
-   isOpened: false,
-};
-
-const AccordionContext = createContext<initContextType>(initContext);
+const AccordionContext = createContext({} as AccordionContextType);
 export const useAccordion = () => useContext(AccordionContext);
 
 interface AccordionProps {

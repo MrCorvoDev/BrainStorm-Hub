@@ -20,17 +20,7 @@ interface questionsInitContext {
       fn?: useChangedQuestionsType,
    ) => Promise<boolean>;
 }
-const initContext: questionsInitContext = {
-   questions: [],
-   setQuestions: () => void 0,
-   orderArray: [],
-   setOrderArray: () => void 0,
-   validateOpenedQuestionFn: async () => Promise.resolve(true),
-   setValidateOpenedQuestionFn: () => void 0,
-   defaultValidateOpenedQuestionFn: () => async () => Promise.resolve(true),
-};
-
-const QuestionsContext = createContext<questionsInitContext>(initContext);
+const QuestionsContext = createContext({} as questionsInitContext);
 export const useQuestions = () => useContext(QuestionsContext);
 
 const QuestionsProvider = ({children}: ReactPropsChildrenType) => {

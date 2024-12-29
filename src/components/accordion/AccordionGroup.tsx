@@ -7,16 +7,11 @@ import {
    useState,
 } from 'react';
 
-interface initContextType {
+interface AccordionGroupContextType {
    activeIndex: number | undefined;
    setActiveIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
-const initContext: initContextType = {
-   activeIndex: undefined,
-   setActiveIndex: () => void 0,
-};
-
-const AccordionGroupContext = createContext<initContextType>(initContext);
+const AccordionGroupContext = createContext({} as AccordionGroupContextType);
 export const useAccordionGroup = () => useContext(AccordionGroupContext);
 
 interface ChildProps {
@@ -27,7 +22,7 @@ interface AccordionGroupProps {
 }
 const AccordionGroup = ({children}: AccordionGroupProps) => {
    const [activeIndex, setActiveIndex] =
-      useState<initContextType['activeIndex']>();
+      useState<AccordionGroupContextType['activeIndex']>();
 
    return (
       <AccordionGroupContext.Provider value={{activeIndex, setActiveIndex}}>

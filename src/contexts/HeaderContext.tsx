@@ -32,17 +32,6 @@ const useSticky = (isStickyInit: boolean) => {
    return isSticky;
 };
 
-interface initContextType {
-   isSticky: boolean;
-   isMenuOpened: boolean;
-   toggleMenu: () => void;
-}
-const initContext: initContextType = {
-   isSticky: false,
-   isMenuOpened: false,
-   toggleMenu: () => void 0,
-};
-
 const useMenu = (isMenuOpenedInit: boolean) => {
    const [isMenuOpened, setIsMenuOpened] = useState(isMenuOpenedInit);
 
@@ -55,22 +44,28 @@ const useMenu = (isMenuOpenedInit: boolean) => {
    return [isMenuOpened, toggleMenu] as const;
 };
 
-const useHeaderContext = ({
-   isSticky: isStickyInit,
-   isMenuOpened: isMenuOpenedInit,
-}: initContextType) => {
-   const isSticky = useSticky(isStickyInit);
-   const [isMenuOpened, toggleMenu] = useMenu(isMenuOpenedInit);
+interface initContextType {
+   isSticky: boolean;
+   isMenuOpened: boolean;
+   toggleMenu: () => void;
+}
+export const HeaderContext = createContext({} as initContextType);
 
-   return {isSticky, isMenuOpened, toggleMenu};
+export const HeaderProvider = ({children}: ReactPropsChildrenType) => {
+   const isSticky = useSticky(false);
+   const [isMenuOpened, toggleMenu] = useMenu(false);
+
+   return (
+      <HeaderContext.Provider
+         value={{
+            isSticky,
+            isMenuOpened,
+            toggleMenu,
+         }}
+      >
+         {children}
+      </HeaderContext.Provider>
+   );
 };
-
-export const HeaderContext = createContext<initContextType>(initContext);
-
-export const HeaderProvider = ({children}: ReactPropsChildrenType) => (
-   <HeaderContext.Provider value={useHeaderContext(initContext)}>
-      {children}
-   </HeaderContext.Provider>
-);
 
 export default HeaderContext;
