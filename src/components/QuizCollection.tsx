@@ -11,6 +11,8 @@ const QuizCollection = () => {
       suspense: true,
    });
 
-   return quizzes.map(quiz => <QuizItem key={quiz.id} quiz={quiz} />);
+   const reversedQuizzes = [...quizzes].reverse();
+
+   return reversedQuizzes.map(quiz => <QuizItem key={quiz.id} quiz={quiz} />);
 };
 export default QuizCollection;
