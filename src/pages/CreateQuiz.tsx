@@ -58,15 +58,14 @@ const CreateQuizEl = () => {
       await navigate('/');
    };
 
-   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      (async () => {
-         await validateOpenedQuestionFn(async updatedQuestions => {
-            await methods.handleSubmit(data =>
-               onSubmit(data, updatedQuestions),
-            )(e);
-         });
-      })().catch(console.error);
+
+      await validateOpenedQuestionFn(async updatedQuestions => {
+         await methods.handleSubmit(data => onSubmit(data, updatedQuestions))(
+            e,
+         );
+      });
    };
 
    return (
@@ -74,7 +73,7 @@ const CreateQuizEl = () => {
          <div className='container'>
             <Headline>Create a Quiz</Headline>
             <FormProvider {...methods}>
-               <Form onSubmit={handleSubmit}>
+               <Form onSubmit={e => void handleSubmit(e)}>
                   <Grid>
                      <Label title='Quiz Name'>
                         <Input name='name' />

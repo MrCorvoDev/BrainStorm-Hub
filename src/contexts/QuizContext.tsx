@@ -61,7 +61,7 @@ export const QuizProvider = ({children}: ReactPropsChildrenType) => {
       setWrongAnswers(0);
    };
 
-   const handleGoHome = () => void navigate('/')?.catch(console.error);
+   const handleGoHome = () => void navigate('/');
 
    const handleOptionSelect = (option: OptionType) => {
       const isCorrect = option.value === currentQuestion.answer.value;

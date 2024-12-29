@@ -50,32 +50,33 @@ const QuestionsBox = () => {
    const {validateOpenedQuestionFn, setOrderArray, setQuestions} =
       useQuestions();
 
-   const handleAddQuestion = () => {
-      (async () => {
-         const isSafeToContinue = await validateOpenedQuestionFn();
-         if (!isSafeToContinue) return;
+   const handleAddQuestion = async () => {
+      const isSafeToContinue = await validateOpenedQuestionFn();
+      if (!isSafeToContinue) return;
 
-         const newId = nanoid();
-         setOrderArray(items => [...items, newId]);
-         setQuestions(items => [
-            ...items,
-            {
-               id: newId,
-               question: 'New Question',
-               options: [
-                  {value: 'true', label: 'True'},
-                  {value: 'false', label: 'False'},
-               ],
-               answer: {value: 'true', label: 'True'},
-            },
-         ]);
-      })().catch(console.error);
+      const newId = nanoid();
+      setOrderArray(items => [...items, newId]);
+      setQuestions(items => [
+         ...items,
+         {
+            id: newId,
+            question: 'New Question',
+            options: [
+               {value: 'true', label: 'True'},
+               {value: 'false', label: 'False'},
+            ],
+            answer: {value: 'true', label: 'True'},
+         },
+      ]);
    };
 
    return (
       <QuestionsBoxEl>
          <QuestionsDnD />
-         <AddQuestionButton type='button' onClick={handleAddQuestion}>
+         <AddQuestionButton
+            type='button'
+            onClick={() => void handleAddQuestion()}
+         >
             <span>Create new question</span>
             <FontAwesomeIcon icon={faPlus} />
          </AddQuestionButton>
