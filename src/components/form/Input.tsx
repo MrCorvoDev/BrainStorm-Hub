@@ -25,12 +25,12 @@ const Input = ({name, placeholder, required = true, ...rest}: InputProps) => {
    const {
       register,
       formState: {errors},
-   } = useFormContext();
+   } = useFormContext() || {formState: {}};
 
    return (
       <InputEl
-         {...register(name, {required})}
-         $error={errors[name] as FieldError | undefined}
+         {...register?.(name, {required})}
+         $error={errors?.[name] as FieldError | undefined}
          placeholder={placeholder}
          {...rest}
       />
