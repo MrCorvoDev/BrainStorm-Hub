@@ -6,6 +6,7 @@ import ErrorFallback from '../components/ErrorFallback';
 import Quiz from '../components/quiz/Quiz';
 import Section from '../components/Section';
 import Spinner from '../components/Spinner';
+import {QuizProvider} from '../contexts/QuizContext';
 
 const SectionEl = styled(Section)`
    min-height: calc(100vh - var(--headerH));
@@ -33,7 +34,9 @@ const QuizPage = () => (
       <ErrorBoundary FallbackComponent={ErrorFallback}>
          <Suspense fallback={<QuizSpinner />}>
             <Container className='container'>
-               <Quiz />
+               <QuizProvider>
+                  <Quiz />
+               </QuizProvider>
             </Container>
          </Suspense>
       </ErrorBoundary>
