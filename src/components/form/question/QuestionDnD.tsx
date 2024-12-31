@@ -41,8 +41,7 @@ const QuestionDnD = ({id, isLast}: QuestionDnDProps) => {
       transition,
    };
 
-   const {validateOpenedQuestionFn, clearDefaultOpenedQuestion} =
-      useQuestions();
+   const {validateOpenedQuestionFn} = useQuestions();
 
    const {toggle, isOpened} = useAccordion();
    const handleElListeners = useMemo(
@@ -54,20 +53,13 @@ const QuestionDnD = ({id, isLast}: QuestionDnDProps) => {
                const isSaveToContinue = await validateOpenedQuestionFn();
                if (!isSaveToContinue) return;
                if (isOpened) {
-                  clearDefaultOpenedQuestion();
                   toggle();
                }
                (listenerFn as (event: Event) => void)(event);
             };
             return acc;
          }, {} as SyntheticListenerMap),
-      [
-         isOpened,
-         listeners,
-         toggle,
-         validateOpenedQuestionFn,
-         clearDefaultOpenedQuestion,
-      ],
+      [isOpened, listeners, toggle, validateOpenedQuestionFn],
    );
 
    return (
