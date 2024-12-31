@@ -16,7 +16,6 @@ import CreateQuestion from './CreateQuestion';
 
 const QuestionEl = styled.div`
    padding: ${em(24)} ${em(8)};
-   border: 2px solid ${props => props.theme.color4 as string};
    border-radius: 5px;
 `;
 
@@ -67,13 +66,20 @@ interface QuestionProps {
    handleElListeners: SyntheticListenerMap | undefined;
 }
 const Question = ({id, handleElListeners}: QuestionProps) => {
-   const {questions, setOrderArray, setQuestions, validateOpenedQuestionFn} =
-      useQuestions();
+   const {
+      questions,
+      setOrderArray,
+      setQuestions,
+      validateOpenedQuestionFn,
+      clearDefaultOpenedQuestion,
+   } = useQuestions();
    const {toggle} = useAccordion();
 
    const handleEdit = async () => {
       const isSafeToContinue = await validateOpenedQuestionFn();
       if (!isSafeToContinue) return;
+
+      clearDefaultOpenedQuestion();
 
       toggle();
    };

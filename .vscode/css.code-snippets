@@ -919,7 +919,7 @@
          "\theight: 100%;",
          "\ttop: 0;",
          "\tleft: 0;",
-         "\tbackground-color: ${1:${chroma(#000).alpha($2)}};",
+         "\tbackground-color: ${1:${Color(#000).alpha($2)}};",
          "}",
       ],
    },
@@ -1014,12 +1014,12 @@
    "Тень блока rgba": {
       "scope": "scss,css",
       "prefix": "bss",
-      "body": ["box-shadow: 0 0 5px ${chroma('#fff').alpha(0.3)};"],
+      "body": ["box-shadow: 0 0 5px ${Color('#fff').alpha(0.3)};"],
    },
    "Затемненный фон": {
       "scope": "scss,css",
       "prefix": "bgco",
-      "body": ["background: ${chroma('#000').alpha(0.3)};"],
+      "body": ["background: ${Color('#000').alpha(0.3)};"],
    },
    "Safe bg": {
       "scope": "scss",

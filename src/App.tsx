@@ -5,6 +5,7 @@ import Header from './components/header/Header';
 import CreateQuiz from './pages/CreateQuiz';
 import Home from './pages/Home';
 import QuizPage from './pages/QuizPage';
+import ScrollResetService from './services/ScrollResetService';
 
 const App = () => (
    <div className='app'>
@@ -15,6 +16,7 @@ const App = () => (
                : (import.meta.env.VITE_PRODUCTION_ROOT as string)
          }
       >
+         <ScrollResetService />
          <Header />
          <div className='content'>
             <Routes>

@@ -59,6 +59,7 @@ const QuestionsBox = () => {
       setQuestions(items => [
          ...items,
          {
+            defaultOpened: true,
             id: newId,
             question: 'New Question',
             options: [

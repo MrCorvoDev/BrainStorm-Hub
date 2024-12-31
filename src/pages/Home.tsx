@@ -10,6 +10,8 @@ import Input from '../components/form/Input';
 import QuizCollection from '../components/QuizCollection';
 import Section from '../components/Section';
 import SkeletonQuizItem from '../components/SkeletonQuizItem';
+import Tag from '../components/Tag';
+import {TagProvider} from '../contexts/TagContext';
 import em from '../styles/utils/em';
 
 const QuizContainer = styled.div`
@@ -18,9 +20,15 @@ const QuizContainer = styled.div`
    gap: ${em(24)};
 `;
 
+const Tags = styled.div`
+   display: flex;
+   flex-wrap: wrap;
+   gap: ${em(8)};
+`;
+
 const InputBox = styled.div`
    position: relative;
-   margin-bottom: ${em(16)};
+   margin-bottom: ${em(8)};
 `;
 const InputEl = styled(Input)`
    padding-right: ${em(16 + 24 + 16)};
@@ -39,40 +47,50 @@ const Home = () => {
    const [debouncedSearchQuery] = useDebounce(searchQuery, 300);
 
    return (
-      <Section>
-         <div className='container'>
-            <QuizContainer>
-               <InputBox>
-                  <InputEl
-                     type='text'
-                     name='search'
-                     placeholder='Search'
-                     value={searchQuery}
-                     onChange={e => setSearchQuery(e.target.value)}
-                  />
-                  {searchQuery && (
-                     <InputReset
-                        type='button'
-                        onClick={() => setSearchQuery('')}
-                     >
-                        <FontAwesomeIcon icon={faTimesCircle} />
-                     </InputReset>
-                  )}
-               </InputBox>
-               <ErrorBoundary FallbackComponent={ErrorFallback}>
-                  <Suspense
-                     fallback={[...Array(10).keys()].map(i => (
-                        <SkeletonQuizItem key={i} />
-                     ))}
-                  >
-                     <QuizCollection
-                        searchQuery={debouncedSearchQuery?.toLowerCase()}
+      <TagProvider>
+         <Section>
+            <div className='container'>
+               <QuizContainer>
+                  <InputBox>
+                     <InputEl
+                        type='text'
+                        name='search'
+                        placeholder='Search'
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
                      />
-                  </Suspense>
-               </ErrorBoundary>
-            </QuizContainer>
-         </div>
-      </Section>
+                     {searchQuery && (
+                        <InputReset
+                           type='button'
+                           onClick={() => setSearchQuery('')}
+                        >
+                           <FontAwesomeIcon icon={faTimesCircle} />
+                        </InputReset>
+                     )}
+                  </InputBox>
+                  <Tags>
+                     <Tag name='All' groupId='main-tags' />
+                     <Tag
+                        name='Only Verified'
+                        groupId='main-tags'
+                        defaultActive
+                     />
+                  </Tags>
+                  <ErrorBoundary FallbackComponent={ErrorFallback}>
+                     <Suspense
+                        fallback={[...Array(10).keys()].map(i => (
+                           <SkeletonQuizItem key={i} />
+                        ))}
+                     >
+                        <QuizCollection
+                           searchQuery={debouncedSearchQuery?.toLowerCase()}
+                        />
+                     </Suspense>
+                  </ErrorBoundary>
+               </QuizContainer>
+            </div>
+         </Section>
+      </TagProvider>
    );
 };
 export default Home;
