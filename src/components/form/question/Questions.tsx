@@ -1,5 +1,5 @@
-import AccordionGroupProvider from '../../../contexts/AccordionGroupProvider';
-import AccordionProvider from '../../../contexts/AccordionProvider';
+import AccordionProvider from '../../../contexts/AccordionContext';
+import AccordionGroupProvider from '../../../contexts/AccordionGroupContext';
 import useQuestions from '../../../hooks/useQuestions';
 import QuestionDnD from './QuestionDnD';
 

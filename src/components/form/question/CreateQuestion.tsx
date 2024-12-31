@@ -6,7 +6,7 @@ import {Controller, useFormContext} from 'react-hook-form';
 import Select from 'react-select';
 import styled, {css} from 'styled-components';
 
-import {useChangedQuestionsType} from '../../../contexts/QuestionsProvider';
+import {useChangedQuestionsType} from '../../../contexts/QuestionsContext';
 import useAccordion from '../../../hooks/useAccordion';
 import useQuestions from '../../../hooks/useQuestions';
 import {OptionType, QuestionType} from '../../../services/quizApi';
