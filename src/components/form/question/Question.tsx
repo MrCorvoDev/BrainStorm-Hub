@@ -40,6 +40,7 @@ const Flex = styled.div`
 `;
 
 const Handle = styled.button`
+   touch-action: none;
    ${IconButtonStyles}
    cursor: grab;
    &:active {
