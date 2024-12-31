@@ -16,7 +16,6 @@ import CreateQuestion from './CreateQuestion';
 
 const QuestionEl = styled.div`
    padding: ${em(24)} ${em(8)};
-   border: 2px solid ${props => props.theme.color4 as string};
    border-radius: 5px;
 `;
 

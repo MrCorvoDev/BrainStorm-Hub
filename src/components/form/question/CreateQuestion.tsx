@@ -4,7 +4,7 @@ import {useDebounce} from '@uidotdev/usehooks';
 import {useEffect, useState} from 'react';
 import {Controller, useFormContext} from 'react-hook-form';
 import Select from 'react-select';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 import {useChangedQuestionsType} from '../../../contexts/QuestionsProvider';
 import useAccordion from '../../../hooks/useAccordion';
@@ -24,14 +24,18 @@ const CreateQuestionEl = styled.div`
    gap: ${em(16)};
 `;
 
-const Grid = styled.div`
+const Grid = styled.div<{$alwaysTwoColumns?: boolean}>`
    display: grid;
    grid-template-columns: 1fr 1fr;
    gap: ${em(16)};
    width: 100%;
-   @media (${md(layout.md3)}) {
-      grid-template-columns: 1fr;
-   }
+   ${props =>
+      !props.$alwaysTwoColumns &&
+      css`
+         @media (${md(layout.md3)}) {
+            grid-template-columns: 1fr;
+         }
+      `}
 `;
 
 const Option = styled.div`
@@ -276,7 +280,7 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
                />
             </Label>
          </Grid>
-         <Grid>
+         <Grid $alwaysTwoColumns>
             {options.map((option, index) => (
                <Option key={index}>
                   <OptionFlex>

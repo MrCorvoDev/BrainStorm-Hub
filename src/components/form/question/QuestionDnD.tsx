@@ -2,15 +2,37 @@ import {SyntheticListenerMap} from '@dnd-kit/core/dist/hooks/utilities';
 import {useSortable} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import {useMemo} from 'react';
+import styled, {css} from 'styled-components';
 
 import useAccordion from '../../../hooks/useAccordion';
 import useQuestions from '../../../hooks/useQuestions';
+import em from '../../../styles/utils/em';
 import Question from './Question';
+
+const QuestionDnDEl = styled.div<{$isLast?: boolean}>`
+   ${({$isLast}) =>
+      !$isLast &&
+      css`
+         position: relative;
+         &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: calc(100% - ${em(32)});
+            height: 2px;
+            border-radius: 1px;
+            background: ${props => props.theme.color4 as string};
+         }
+      `}
+`;
 
 interface QuestionDnDProps {
    id: string;
+   isLast?: boolean;
 }
-const QuestionDnD = ({id}: QuestionDnDProps) => {
+const QuestionDnD = ({id, isLast}: QuestionDnDProps) => {
    const {attributes, listeners, setNodeRef, transform, transition} =
       useSortable({id});
 
@@ -49,9 +71,15 @@ const QuestionDnD = ({id}: QuestionDnDProps) => {
    );
 
    return (
-      <div ref={setNodeRef} style={style} {...attributes}>
+      <QuestionDnDEl
+         ref={setNodeRef}
+         style={style}
+         {...attributes}
+         className='question-dnd'
+         $isLast={isLast}
+      >
          <Question id={id} handleElListeners={handleElListeners}></Question>
-      </div>
+      </QuestionDnDEl>
    );
 };
 

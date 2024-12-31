@@ -17,7 +17,7 @@ const Questions = () => {
                   questions.find(question => question.id === id)?.defaultOpened
                }
             >
-               <QuestionDnD id={id} />
+               <QuestionDnD id={id} isLast={i === orderArray.length - 1} />
             </AccordionProvider>
          ))}
       </AccordionGroupProvider>
