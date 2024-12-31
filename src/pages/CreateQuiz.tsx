@@ -46,6 +46,7 @@ const CreateQuizEl = () => {
 
    const onSubmit = async (data: FieldValues, questions: QuestionType[]) => {
       const newData = {
+         verified: false,
          id: nanoid(),
          name: data.name as string,
          description: data.description as string,

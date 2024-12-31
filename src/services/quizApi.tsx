@@ -20,6 +20,7 @@ export interface QuizType {
    name: string;
    description: string;
    questions: QuestionType[];
+   verified?: boolean;
 }
 export const createQuiz = async (quiz: QuizType) => {
    try {

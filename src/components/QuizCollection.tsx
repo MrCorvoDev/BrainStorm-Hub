@@ -1,6 +1,7 @@
 import Fuse from 'fuse.js';
 import useSWR from 'swr';
 
+import useTag from '../hooks/useTag';
 import {
    getAllQuizzes,
    quizzesURL as quizzesCacheKey,
@@ -35,6 +36,12 @@ const QuizCollection = ({searchQuery}: QuizCollectionProps) => {
 
       quizzes = fuse.search(searchQuery).map(({item}) => item);
    }
+
+   const {getActiveTags} = useTag();
+   const activeTags = getActiveTags();
+   const onlyVerified = activeTags.find(tag => tag.name === 'Only Verified');
+
+   if (onlyVerified) quizzes = quizzes.filter(quiz => quiz.verified);
 
    return quizzes.map(quiz => <QuizItem key={quiz.id} quiz={quiz} />);
 };
