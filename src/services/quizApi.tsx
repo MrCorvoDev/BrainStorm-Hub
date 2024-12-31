@@ -9,6 +9,7 @@ export interface OptionType {
    label: string;
 }
 export interface QuestionType {
+   defaultOpened?: boolean;
    id: string;
    question: string;
    options: OptionType[];

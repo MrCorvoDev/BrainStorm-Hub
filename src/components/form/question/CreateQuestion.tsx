@@ -169,6 +169,7 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
    useEffect(() => {
       if (isOpened) {
          const currentQuestion: QuestionType = {
+            defaultOpened: false,
             id: item.id,
             question,
             answer,

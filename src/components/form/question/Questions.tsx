@@ -5,11 +5,18 @@ import QuestionDnD from './QuestionDnD';
 
 const Questions = () => {
    const {orderArray} = useQuestions();
+   const {questions} = useQuestions();
 
    return (
       <AccordionGroupProvider>
-         {orderArray.map(id => (
-            <AccordionProvider key={id}>
+         {orderArray.map((id, i) => (
+            <AccordionProvider
+               key={id}
+               defaultOpened={
+                  orderArray.length - 1 === i &&
+                  questions.find(question => question.id === id)?.defaultOpened
+               }
+            >
                <QuestionDnD id={id} />
             </AccordionProvider>
          ))}

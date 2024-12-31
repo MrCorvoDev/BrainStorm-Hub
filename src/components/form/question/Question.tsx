@@ -67,13 +67,20 @@ interface QuestionProps {
    handleElListeners: SyntheticListenerMap | undefined;
 }
 const Question = ({id, handleElListeners}: QuestionProps) => {
-   const {questions, setOrderArray, setQuestions, validateOpenedQuestionFn} =
-      useQuestions();
+   const {
+      questions,
+      setOrderArray,
+      setQuestions,
+      validateOpenedQuestionFn,
+      clearDefaultOpenedQuestion,
+   } = useQuestions();
    const {toggle} = useAccordion();
 
    const handleEdit = async () => {
       const isSafeToContinue = await validateOpenedQuestionFn();
       if (!isSafeToContinue) return;
+
+      clearDefaultOpenedQuestion();
 
       toggle();
    };

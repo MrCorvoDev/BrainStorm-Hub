@@ -19,6 +19,7 @@ interface questionsInitContext {
    defaultValidateOpenedQuestionFn: () => (
       fn?: useChangedQuestionsType,
    ) => Promise<boolean>;
+   clearDefaultOpenedQuestion: () => void;
 }
 export const QuestionsContext = createContext({} as questionsInitContext);
 
@@ -38,6 +39,16 @@ const QuestionsProvider = ({children}: ReactPropsChildrenType) => {
       (fn?: useChangedQuestionsType) => Promise<boolean>
    >(defaultValidateOpenedQuestionFn);
 
+   const clearDefaultOpenedQuestion = () => {
+      const updatedQuestions = [...questions];
+      const lastIndex = updatedQuestions.length - 1;
+      updatedQuestions[lastIndex] = {
+         ...updatedQuestions[lastIndex],
+         defaultOpened: false,
+      };
+      setQuestions(updatedQuestions);
+   };
+
    return (
       <QuestionsContext.Provider
          value={{
@@ -48,6 +59,7 @@ const QuestionsProvider = ({children}: ReactPropsChildrenType) => {
             validateOpenedQuestionFn,
             setValidateOpenedQuestionFn,
             defaultValidateOpenedQuestionFn,
+            clearDefaultOpenedQuestion,
          }}
       >
          {children}
