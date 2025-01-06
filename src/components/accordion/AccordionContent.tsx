@@ -15,9 +15,7 @@ const AccordionContent = ({children}: ReactPropsChildrenType) => {
          initial={animation}
          animate={animation}
          transition={{
-            type: 'spring',
-            duration: 0.5,
-            bounce: 0.3,
+            duration: 0.3,
          }}
       >
          {children}
