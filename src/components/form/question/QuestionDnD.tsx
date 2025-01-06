@@ -1,7 +1,7 @@
 import {SyntheticListenerMap} from '@dnd-kit/core/dist/hooks/utilities';
 import {useSortable} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import styled, {css} from 'styled-components';
 
 import useAccordion from '../../../hooks/useAccordion';
@@ -30,9 +30,10 @@ const QuestionDnDEl = styled.div<{$isLast?: boolean}>`
 
 interface QuestionDnDProps {
    id: string;
+   defaultOpened?: boolean;
    isLast?: boolean;
 }
-const QuestionDnD = ({id, isLast}: QuestionDnDProps) => {
+const QuestionDnD = ({id, defaultOpened, isLast}: QuestionDnDProps) => {
    const {attributes, listeners, setNodeRef, transform, transition} =
       useSortable({id});
 
@@ -44,6 +45,11 @@ const QuestionDnD = ({id, isLast}: QuestionDnDProps) => {
    const {validateOpenedQuestionFn} = useQuestions();
 
    const {toggle, isOpened} = useAccordion();
+
+   useEffect(() => {
+      if (defaultOpened && !isOpened) toggle();
+   }, [defaultOpened, toggle, isOpened]);
+
    const handleElListeners = useMemo(
       () =>
          listeners &&
