@@ -10,14 +10,16 @@ const Questions = () => {
    return (
       <AccordionGroupProvider>
          {orderArray.map((id, i) => (
-            <AccordionProvider
-               key={id}
-               defaultOpened={
-                  orderArray.length - 1 === i &&
-                  questions.find(question => question.id === id)?.defaultOpened
-               }
-            >
-               <QuestionDnD id={id} isLast={i === orderArray.length - 1} />
+            <AccordionProvider key={id}>
+               <QuestionDnD
+                  id={id}
+                  isLast={i === orderArray.length - 1}
+                  defaultOpened={
+                     orderArray.length - 1 === i &&
+                     questions.find(question => question.id === id)
+                        ?.defaultOpened
+                  }
+               />
             </AccordionProvider>
          ))}
       </AccordionGroupProvider>
