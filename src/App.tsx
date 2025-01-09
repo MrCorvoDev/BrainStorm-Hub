@@ -4,17 +4,14 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Layout from './components/core/Layout';
 import Home from './pages/Home';
 
+const isDev = import.meta.env.MODE === 'development';
+const basename = isDev ? '/' : (import.meta.env.VITE_PRODUCTION_ROOT as string);
+
 const CreateQuiz = lazy(() => import('./pages/CreateQuiz'));
 const QuizPage = lazy(() => import('./pages/QuizPage'));
 
 const App = () => (
-   <BrowserRouter
-      basename={
-         import.meta.env.MODE === 'development'
-            ? '/'
-            : (import.meta.env.VITE_PRODUCTION_ROOT as string)
-      }
-   >
+   <BrowserRouter basename={basename}>
       <Routes>
          <Route element={<Layout />}>
             <Route index element={<Home />} />
