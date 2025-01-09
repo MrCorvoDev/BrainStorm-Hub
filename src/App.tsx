@@ -1,11 +1,14 @@
+import {lazy} from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
 import Footer from './components/Footer';
 import Header from './components/header/Header';
-import CreateQuiz from './pages/CreateQuiz';
+import RouterLazyLoader from './components/loading/RouterLazyLoader';
 import Home from './pages/Home';
-import QuizPage from './pages/QuizPage';
 import ScrollResetService from './services/ScrollResetService';
+
+const CreateQuiz = lazy(() => import('./pages/CreateQuiz'));
+const QuizPage = lazy(() => import('./pages/QuizPage'));
 
 const App = () => (
    <div className='app'>
@@ -20,9 +23,11 @@ const App = () => (
          <Header />
          <div className='content'>
             <Routes>
-               <Route index element={<Home />} />
-               <Route path='create-quiz' element={<CreateQuiz />} />
-               <Route path='quiz/:id' element={<QuizPage />} />
+               <Route element={<RouterLazyLoader />}>
+                  <Route index element={<Home />} />
+                  <Route path='create-quiz' element={<CreateQuiz />} />
+                  <Route path='quiz/:id' element={<QuizPage />} />
+               </Route>
             </Routes>
          </div>
          <Footer />

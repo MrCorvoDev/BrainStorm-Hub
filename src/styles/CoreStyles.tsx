@@ -44,6 +44,8 @@ const CoreStyles = css`
 
    .content {
       flex-grow: 1;
+      display: flex;
+      flex-direction: column;
    }
 
    .container {
