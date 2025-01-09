@@ -13,10 +13,10 @@ const QuizPage = lazy(() => import('./pages/QuizPage'));
 const App = () => (
    <BrowserRouter basename={basename}>
       <Routes>
-         <Route element={<Layout />}>
+         <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path='create-quiz' element={<CreateQuiz />} />
-            <Route path='quiz/:id' element={<QuizPage />} />
+            <Route path='/create-quiz' element={<CreateQuiz />} />
+            <Route path='/quiz/:id' element={<QuizPage />} />
          </Route>
       </Routes>
    </BrowserRouter>
