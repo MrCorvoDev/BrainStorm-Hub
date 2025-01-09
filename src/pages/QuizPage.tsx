@@ -1,11 +1,7 @@
-import {Suspense} from 'react';
-import {ErrorBoundary} from 'react-error-boundary';
 import styled from 'styled-components';
 
 import Section from '../components/core/Section';
-import ErrorFallback from '../components/ErrorFallback';
 import Quiz from '../components/quiz/Quiz';
-import Spinner from '../components/Spinner';
 import {QuizProvider} from '../contexts/QuizContext';
 
 const SectionEl = styled(Section)`
@@ -21,25 +17,13 @@ const Container = styled.div`
    flex: 1 1 auto;
 `;
 
-const QuizSpinner = styled(Spinner)`
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   translate: -50% -50%;
-   font-size: 1.7em;
-`;
-
 const QuizPage = () => (
    <SectionEl>
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-         <Suspense fallback={<QuizSpinner />}>
-            <Container className='container'>
-               <QuizProvider>
-                  <Quiz />
-               </QuizProvider>
-            </Container>
-         </Suspense>
-      </ErrorBoundary>
+      <Container className='container'>
+         <QuizProvider>
+            <Quiz />
+         </QuizProvider>
+      </Container>
    </SectionEl>
 );
 export default QuizPage;
