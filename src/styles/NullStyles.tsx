@@ -18,6 +18,7 @@ const NullStyles = css`
    span,
    label,
    em,
+   i,
    strong,
    *:before,
    *:after {

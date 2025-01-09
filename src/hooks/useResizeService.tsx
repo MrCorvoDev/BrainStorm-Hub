@@ -1,7 +1,7 @@
 import {useThrottle, useWindowSize} from '@uidotdev/usehooks';
 import {useEffect, useRef} from 'react';
 
-export const ResizeService = () => {
+export const useResizeService = () => {
    const {width} = useWindowSize();
    const throttledValue = useThrottle(width, 250);
    const isInitialRender = useRef(1);
@@ -21,8 +21,6 @@ export const ResizeService = () => {
 
       return () => clearTimeout(timeoutId);
    }, [throttledValue]);
-
-   return null;
 };
 
-export default ResizeService;
+export default useResizeService;

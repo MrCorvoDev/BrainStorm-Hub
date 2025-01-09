@@ -5,10 +5,10 @@ import {Suspense, useState} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
 import styled from 'styled-components';
 
+import Section from '../components/core/Section';
 import ErrorFallback from '../components/ErrorFallback';
 import Input from '../components/form/Input';
 import QuizCollection from '../components/QuizCollection';
-import Section from '../components/Section';
 import SkeletonQuizItem from '../components/SkeletonQuizItem';
 import Tag from '../components/Tag';
 import {TagProvider} from '../contexts/TagContext';

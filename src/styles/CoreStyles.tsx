@@ -35,15 +35,17 @@ const CoreStyles = css`
       ${lockPadding()}
    }
 
-   .app {
+   #app {
       width: 100%;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
    }
 
-   .content {
+   #content {
       flex-grow: 1;
+      display: flex;
+      flex-direction: column;
    }
 
    .container {
