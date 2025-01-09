@@ -9,9 +9,9 @@ const Layout = () => {
    useResizeService();
 
    return (
-      <div className='app'>
+      <div id='app'>
          <Header />
-         <div className='content'>
+         <div id='content'>
             <RouterLazyLoader />
          </div>
          <Footer />
