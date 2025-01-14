@@ -284,7 +284,7 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
          </Grid>
          <Grid $alwaysTwoColumns>
             {options.map((option, index) => (
-               <Option key={index}>
+               <Option key={option.value}>
                   <OptionFlex>
                      <OptionLabel htmlFor={`${item.id}-options-${index}`}>
                         Option {index + 1}
