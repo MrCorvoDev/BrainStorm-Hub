@@ -17,17 +17,15 @@ const useSticky = (isStickyInit: boolean) => {
       dc(layout.headerHeights.pc, layout.headerHeights.mobile),
    );
 
-   const [prevY, setPrevY] = useState(lastY);
+   const prevY = useRef(lastY);
 
    const isExpectedRender = useRef(1);
    useEffect(() => {
       if (isExpectedRender.current < 4 && ++isExpectedRender.current) return;
 
-      setIsSticky(prevY < lastY && lastY > headerHeight); // If scrolls down and below header height
-      setPrevY(lastY);
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [lastY]);
+      setIsSticky(prevY.current < lastY && lastY > headerHeight); // If scrolls down and below header height
+      prevY.current = lastY;
+   }, [headerHeight, lastY]);
 
    return isSticky;
 };

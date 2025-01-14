@@ -205,8 +205,7 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
                return isValid;
             },
          );
-      } else setValidateOpenedQuestionFn(defaultValidateOpenedQuestionFn);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      } else setValidateOpenedQuestionFn(() => defaultValidateOpenedQuestionFn);
    }, [
       isOpened,
       answer,
@@ -216,6 +215,9 @@ const CreateQuestion = ({item}: CreateQuestionProps) => {
       item.id,
       trigger,
       setQuestions,
+      defaultValidateOpenedQuestionFn,
+      questions,
+      toggle,
    ]);
 
    const handleOptionChange = (index: number, value: string) => {

@@ -1,4 +1,4 @@
-import {createContext, useEffect, useState} from 'react';
+import {createContext, useCallback, useEffect, useState} from 'react';
 
 import useAccordionGroup from '../hooks/useAccordionGroup';
 import {ReactChildrenType} from '../types/global';
@@ -31,10 +31,10 @@ const AccordionProvider = ({
       if (shouldClose) setIsOpened(false);
    }, [activeIndex, index, isGroup]);
 
-   const toggle = () => {
+   const toggle = useCallback(() => {
       setIsOpened(!isOpened);
       if (isGroup && !isOpened) setActiveIndex(index);
-   };
+   }, [index, isGroup, isOpened, setActiveIndex, setIsOpened]);
 
    return (
       <AccordionContext.Provider value={{toggle, isOpened}}>
