@@ -1,4 +1,4 @@
-import {createContext, useState} from 'react';
+import {createContext, useCallback, useState} from 'react';
 
 import {QuestionType} from '../services/quizApi';
 import {ReactPropsChildrenType} from '../types/global';
@@ -16,7 +16,7 @@ interface questionsInitContext {
    setValidateOpenedQuestionFn: React.Dispatch<
       React.SetStateAction<(fn?: useChangedQuestionsType) => Promise<boolean>>
    >;
-   defaultValidateOpenedQuestionFn: () => (
+   defaultValidateOpenedQuestionFn: (
       fn?: useChangedQuestionsType,
    ) => Promise<boolean>;
 }
@@ -26,17 +26,19 @@ const QuestionsProvider = ({children}: ReactPropsChildrenType) => {
    const [questions, setQuestions] = useState<QuestionType[]>([]);
    const [orderArray, setOrderArray] = useState<string[]>([]);
 
-   const defaultValidateOpenedQuestionFn =
-      () => async (handleChangedQuestions?: useChangedQuestionsType) => {
+   const defaultValidateOpenedQuestionFn = useCallback(
+      async (handleChangedQuestions?: useChangedQuestionsType) => {
          if (typeof handleChangedQuestions === 'function') {
             await handleChangedQuestions(questions);
          }
 
          return true;
-      };
+      },
+      [questions],
+   );
    const [validateOpenedQuestionFn, setValidateOpenedQuestionFn] = useState<
       (fn?: useChangedQuestionsType) => Promise<boolean>
-   >(defaultValidateOpenedQuestionFn);
+   >(() => defaultValidateOpenedQuestionFn);
 
    return (
       <QuestionsContext.Provider
