@@ -70,9 +70,9 @@ const QuizBody = () => {
                {currentQuestion.question}
             </Question>
             <Options $columns={optionsLength >= 4 ? 4 : 2}>
-               {currentQuestion.options.map((option, i) => (
+               {currentQuestion.options.map(option => (
                   <motion.div
-                     key={i}
+                     key={option.value}
                      initial='hidden'
                      animate='visible'
                      exit='exit'
