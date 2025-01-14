@@ -1,4 +1,4 @@
-import {createContext, useState} from 'react';
+import {createContext, useCallback, useState} from 'react';
 
 import {ReactPropsChildrenType} from '../types/global';
 
@@ -27,27 +27,26 @@ const toggleTag = (tag: TagType) => ({...tag, isActive: !tag.isActive});
 export const TagProvider = ({children}: ReactPropsChildrenType) => {
    const [tags, setTags] = useState<TagsType>({global: []});
 
-   const register: TagContextType['register'] = (
-      name,
-      groupId,
-      defaultActive,
-   ) => {
-      setTags(prev => {
-         if (prev[groupId]?.find(tag => tag.name === name)) return prev;
+   const register: TagContextType['register'] = useCallback(
+      (name, groupId, defaultActive) => {
+         setTags(prev => {
+            if (prev[groupId]?.find(tag => tag.name === name)) return prev;
 
-         return {
-            ...prev,
-            [groupId]: [
-               ...(prev[groupId] || []),
-               {
-                  name,
-                  isActive: Boolean(defaultActive),
-                  defaultActive,
-               },
-            ],
-         };
-      });
-   };
+            return {
+               ...prev,
+               [groupId]: [
+                  ...(prev[groupId] || []),
+                  {
+                     name,
+                     isActive: Boolean(defaultActive),
+                     defaultActive,
+                  },
+               ],
+            };
+         });
+      },
+      [setTags],
+   );
 
    const handleClick: TagContextType['handleClick'] = (name, groupId) => {
       const alwaysOneActive = tags[groupId].find(tag => tag.defaultActive);
